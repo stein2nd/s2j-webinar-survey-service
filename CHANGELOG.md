@@ -12,7 +12,6 @@
 
 ### Changed
 
-* README の見出しを `S2J Webinar Survey Service` に変更
 * `.gitignore` を Composer、Node、テスト成果物向けに拡張
 * `.gitattributes` で開発専用パスを Composer 配布物から除外
 * `.vscode/settings.json` で `json.schemaDownload.enable` と textlint の保存時修正を有効化
