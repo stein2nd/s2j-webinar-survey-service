@@ -1,1 +1,2 @@
-# s2j-webinar-survey-service
+# S2J Webinar Survey Service
+
