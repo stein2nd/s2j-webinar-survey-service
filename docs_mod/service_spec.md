@@ -64,7 +64,7 @@ Zoom にアンケートとして付けるリクエストは、[S2J Webinar Servi
 
 | 責務 | 内容 |
 | --- | --- |
-| 検査 | 内部名、設問文、選択式の選択肢。足りなければ状態は `draft` |
+| 検査 | 内部名、設問文、答え方ごとの欄。足りなければ状態は `draft` |
 | 助言 | 総数、順番、回答の躊躇、企画上の目的。状態は変えない |
 | 文書 | 下記の形にそろえて返す。呼び出した順を保つ |
 | 下書き | 依頼文を組み立て、返ってきた文を候補に分ける。文書には書かない |
@@ -75,15 +75,29 @@ Zoom にアンケートとして付けるリクエストは、[S2J Webinar Servi
 internal_name              空は不足。回答者には出さない
 questions                  順序あり。0件は不足
   prompt                   回答者に見せる文。空は不足
-  answer_kind              closed | open
+  answer_kind              single | multiple | short | long | rating
   required                 true | false
   identifies_respondent    true | false。運営者が付ける
   purpose                  次回の企画で何を決めるか。回答者には出さない
-  choices                  closed のとき、空でない文が2つ以上。open では空
+  choices                  single / multiple のとき、空でない文が2つ以上。それ以外では空
+  score_min                rating のとき。整数。既定の目安は 0
+  score_max                rating のとき。整数。既定の目安は 10。score_min より大きい
+  label_low                rating のとき。低いスコアのラベル。空可
+  label_high               rating のとき。高いスコアのラベル。空可
 status                     draft | ready
 ```
 
-`closed` は、択一と段階評価です。段階評価も、選択肢の文言の列として持ちます。Zoom の設問型への写像は、本ライブラリの外です。
+答え方は5つです。Zoom の画面の呼び名との対応は、写像の表に任せます。本ライブラリは Zoom の型名を持ちません。
+
+| answer_kind | 意味 | パネルの呼び名 (目安) |
+| --- | --- | --- |
+| `single` | 単一選択 | 単一選択 |
+| `multiple` | 複数選択 | 複数選択 |
+| `short` | 短い自由記述 | 短い回答 |
+| `long` | 長い自由記述 | 長い回答 |
+| `rating` | 数値の段階評価 | レーティングスケール |
+
+選択式は `single` と `multiple` です。段階評価は `rating` であり、選択肢の列にはしません。短い回答と長い回答の文字数は、文書には持ちません。添付時に Zoom の既定に任せます。
 
 `internal_name` は、Zoom の一覧にだけ出る名前です。回答者の画面には出しません。本ライブラリはそれを送りません。
 
@@ -105,20 +119,22 @@ status                     draft | ready
 | `internal_name_empty` | 内部名が空 |
 | `questions_empty` | 設問が0件 |
 | `prompt_empty` | 設問文が空 |
-| `choices_missing` | `closed` で、空でない選択肢が2つ未満 |
-| `choices_unexpected` | `open` なのに選択肢がある |
+| `answer_kind_invalid` | `answer_kind` が上記5つのどれでもない |
+| `choices_missing` | `single` または `multiple` で、空でない選択肢が2つ未満 |
+| `choices_unexpected` | `short` / `long` / `rating` なのに選択肢がある |
+| `rating_bounds_invalid` | `rating` で、`score_min` と `score_max` が揃わない、または `score_min` が `score_max` 以上 |
 
 助言は、保存を拒みません。`ready` のままでも返します。
 
 | コード | 条件 |
 | --- | --- |
 | `too_many` | 設問数が、引数の上限を超える |
-| `open_before_closed` | 自由記述より後ろに、選択式がある |
-| `required_open` | 自由記述が必須である |
+| `open_before_closed` | `short` または `long` より後ろに、`single` / `multiple` / `rating` がある |
+| `required_open` | `short` または `long` が必須である |
 | `identity_not_last` | `identifies_respondent` が真の設問が、最後ではない |
 | `purpose_missing` | `purpose` が空 |
 
-順番の規則は、答えやすい選択式を先にし、自由記述を後ろにまとめる、です。回答者を特定する問いは最後に置きます。必須の自由記述と、特定の問いは、回答を躊躇させやすいものとして助言します。
+順番の規則は、答えやすい選択と段階評価 (`single` / `multiple` / `rating`) を先にし、自由記述 (`short` / `long`) を後ろにまとめる、です。回答者を特定する問いは最後に置きます。必須の自由記述と、特定の問いは、回答を躊躇させやすいものとして助言します。
 
 上限の本数は、本ライブラリに固定しません。プラグインが渡します。サイト設定の値であり、未設定のときの初期値は6です。6も設定の下限・上限も、ライブラリには埋めません。
 
@@ -132,11 +148,11 @@ status                     draft | ready
 
 | 種類 | 件数 | 中身 |
 | --- | --- | --- |
-| アンケート | 上限から、すでに文書にある設問数を引いた数。文書が空なら上限そのもの | 各件は設問文が一文。選択式なら短いラベルを少数。企画上の目的は空 |
+| アンケート | 上限から、すでに文書にある設問数を引いた数。文書が空なら上限そのもの | 各件は設問文が一文。`single` / `multiple` なら短いラベルを少数。企画上の目的は空 |
 | 設問文 | いま開いている1件 | 設問文が一文 |
-| 選択肢 | いま開いている選択式の1件 | 短いラベルを少数 |
+| 選択肢 | いま開いている `single` または `multiple` の1件 | 短いラベルを少数 |
 
-アンケートの依頼では、選択式を先にし、自由記述は最後に多くて1件、と依頼文に書きます。回答者を特定する問いと、必須の自由記述は依頼しません。候補の `required` と `identifies_respondent` は偽、`purpose` は空です。
+アンケートの依頼では、`single` / `multiple` / `rating` を先にし、自由記述は最後に多くて1件、と依頼文に書きます。回答者を特定する問いと、必須の自由記述は依頼しません。候補の `required` と `identifies_respondent` は偽、`purpose` は空です。
 
 渡してよいのは、イベントの題名、各設問の答え方、運営者が書いた企画上の目的、すでに文書にある設問文です。登壇者のメールと申込者の情報は渡しません。
 
@@ -191,7 +207,40 @@ KIS のサイトは、このプラグインのユーザーの一つです。
 1. 本ドラフトの合意。
 2. 本 repo でスケルトンと純関数の初版 (PHPUnit、WordPress なし、HTTP なし)。検査、助言、下書きの依頼文と分解を含む。
 3. プラグインが Composer で require し、イベント編集画面の保存と助言表示、ボタンによる下書きをつなぐ。
-4. Zoom のアンケート設問型が分かってから、S2J Webinar Service が `ready` の文書を添付リクエストに写す。写像は本ライブラリに入れない。
+4. S2J Webinar Service が `ready` の文書を `PATCH /webinars/{webinarId}/survey` の材料に写す。写像は本ライブラリに入れない。
+
+## Zoom への写像 (本ライブラリの外)
+
+写像は [S2J Webinar Service](https://github.com/stein2nd/s2j-webinar-service) だけが持ちます。本ライブラリは Zoom のフィールドを持ちません。投票 (poll) と登録の質問は使いません。回答レポート (`GET /report/webinars/{webinarId}/survey`) は設問の作成・更新ではありません。
+
+初版5種の `type` 文字列は、`webinarSurveyUpdate` の `custom_survey.questions[].type` で確定しています。キー名の詳細は webinar-service の写像表です。
+
+| 文書 | Zoom (`custom_survey.questions[]`) |
+| --- | --- |
+| `prompt` | `name` |
+| `required` | `answer_required` |
+| `single` + `choices` | `type` = `single`、`answers` |
+| `multiple` + `choices` | `type` = `multiple`、`answers` |
+| `short` | `type` = `short_answer`。文字数は API の既定 |
+| `long` | `type` = `long_answer`。文字数は API の既定 |
+| `rating` + `score_*` / `label_*` | `type` = `rating_scale`、`rating_min_value` など |
+| `internal_name` | 調査タイトル／内部名まわり。設問の `type` ではない |
+
+enum 全体 (初版では後ろ3つを送らない) は、`single` / `multiple` / `short_answer` / `long_answer` / `rating_scale` / `matching` / `rank_order` / `fill_in_the_blank` です。
+
+アンケート見出しは、未設定ならウェビナータイトルです。説明は初版では空です。「ドロップダウンとして表示」「重み」は送りません。
+
+設問数の上限は、プラグインのサイト設定 (1以上15以下、未設定時は6) を正とします。Zoom 側の上限が判明したら、それを超えるときは添付で止めるか切り詰めます。画面だけでは上限を決めません。
+
+初版以降で対応するか否かを検討するのは、次だけです。文書にも検査にも、初版では入れません。
+
+* 各設問への画像のアップロード
+* 単一選択でのスキップロジック
+* マッチング (`matching`)
+* ランク順 (`rank_order`)
+* 空欄に記入する (`fill_in_the_blank`)
+
+過去のアンケート設問の流用は、非目標のままです。
 
 ## 本ドラフトの提案
 
@@ -201,20 +250,17 @@ KIS のサイトは、このプラグインのユーザーの一つです。
 * 初版は、運営者が書いた設問の検査と助言に、ボタンで頼む下書きを足す。下書きは人が採用するまで文書に入らない。企画上の目的は運営者が書く。
 * 計算は本ライブラリ、編集と保存と表示文は S2J Webinar Survey、Zoom への添付は S2J Webinar である。
 * 助言は保存を拒まない。不足があるときだけ `draft` とし、S2J Webinar は `ready` だけを読む。
-* 選択式を先、自由記述を後にまとめる。回答者を特定する問いは最後に置く。必須の自由記述は、躊躇の助言にする。
+* 答え方は `single` / `multiple` / `short` / `long` / `rating` の5つ。選択と段階評価を先、自由記述を後にまとめる。回答者を特定する問いは最後に置く。必須の自由記述は、躊躇の助言にする。
 * 各設問の企画上の目的が空なら、助言にする。目的は回答者に出さない。
 * 設問総数の上限は引数である。プラグインがサイト設定の値を渡す。未設定の初期値は6。アンケートの下書きは、その上限から既存の設問数を引いた件数を、1本の依頼で返す。設問文は一文、選択肢は短いラベルを少数とする。
 * 開いている1件の設問文、またはその選択肢も、それぞれ1本の依頼で下書きできる。保存時と画面表示と cron では頼まない。
 * ライブラリには上限の初期値も、設定の下限・上限も埋め込まない。検証と助言の規則だけを持つ。
 * 誘導と二重の問いは、初版では判定しない。あとで足すなら、保存を拒まない助言か、ボタンで頼む見直しに限る。周知はプラグインのパネル冒頭の指針である。
 * 内部名は回答者に出さない。Zoom の一覧用であり、本ライブラリは送信しない。
+* Zoom の型名と添付リクエストは本ライブラリに入れない。写像は S2J Webinar Service が持つ。
 * 回答率の数値は持たない。
 * ライセンスは、プラグインとライブラリの両方で GPL-3.0-or-later。
 * パッケージ名は `s2j/webinar-survey-service`。プラグインのスラッグは `s2j-webinar-survey`。
-
-## 未決事項
-
-* Zoom のアンケート設問型への写像。名前が確定するまで、本ライブラリは Zoom のフィールドを持たない。
 
 ## 改訂履歴
 
@@ -224,3 +270,5 @@ KIS のサイトは、このプラグインのユーザーの一つです。
 | 2026-10-06 | 下書きは、依頼文の組み立てと返却文の分解までを本ライブラリが持つ。モデルはプラグインがボタンで1回呼ぶ。人が採用するまで文書に入らない、と記録 |
 | 2026-10-07 | 設問総数の上限はプラグインのサイト設定が渡す。未設定の初期値は6。ライブラリには埋め込まない、と記録 |
 | 2026-10-07 | 誘導と二重の問いは初版では判定しない。あとで足すなら保存を拒まない助言かボタンの見直しに限る。周知はプラグインの指針、と記録 |
+| 2026-10-07 | 答え方を `single` / `multiple` / `short` / `long` / `rating` の5つにする。写像は webinar-service。画像・スキップ・マッチング・ランク・空欄記入は初版以降の検討、と記録 |
+| 2026-10-07 | 初版5種の Zoom `type` を確定 (`single` / `multiple` / `short_answer` / `long_answer` / `rating_scale`)。本ライブラリは Zoom フィールドを持たない、と記録 |
