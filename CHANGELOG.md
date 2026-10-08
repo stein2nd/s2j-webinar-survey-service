@@ -2,6 +2,19 @@
 
 ## unreleased
 
+## 0.0.1 - 2026-10-09
+
+### Fixed
+
+* プラグイン仕様リンクを `docs_mod/specs.md` から `docs/specs.md` に更新
+* usage の評価タイミングをプラグイン正本に寄せる (「保存のたびに」前提をやめる)
+* kind `survey` で `document` 欠落、または `questions` 非配列は既存0件扱いと明記 (例外にしない)
+
+### Changed
+
+* ガバナンス見出しを「ドキュメンテーション・ガバナンス」(中黒あり) に統一
+* `docs/archive/README.md` / `draft_spec.md` の表記をドキュメント lint に合わせた
+
 ## 0.0.1 - 2026-10-08
 
 ### Changed

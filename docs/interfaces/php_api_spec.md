@@ -66,6 +66,7 @@ function build_draft_prompt(string $kind, array $context): array
 
 * 戻りは、コネクタに送る依頼文と、その依頼で期待する件数の組である。`parse_draft_response` には、同じ `requested_count` を渡す。
 * `$context['max_questions']` が必要な場合 (`survey`)、値が1未満なら `InvalidArgumentException` とする。`evaluate` と同じ。
+* `survey` の既存設問数は、`$context['document']['questions']` から数える。`document` 欠落、または `questions` が配列でない場合は、**既存0件扱い** とする (例外にしない)。
 * `survey` の `requested_count` は `max(0, max_questions − 既存設問数)` である。0の場合は `prompt_text` を空文字、`requested_count` を0とし、プラグインは送らない。**`requested_count` が0になりうるのは `survey` だけ**である。
 * `prompt` / `choices` は focus が正しければ常に `requested_count` は1、`prompt_text` は非空である。不正なら例外とし、0や空文字は返さない。
 * `prompt` / `choices` では `$context['focus_index']` が必須の `int` である (null 不可)。欠けるか範囲外なら `InvalidArgumentException` とする。`survey` では `focus_index` は不要 (あっても無視してよい)。

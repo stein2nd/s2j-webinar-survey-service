@@ -88,7 +88,7 @@ PHP の公開面と Core の間で共有する Source of Truth とします。
 | --- | --- | --- |
 | kind | enum | 引数。`survey` / `prompt` / `choices` |
 | max_questions | int | `survey` で必須 |
-| document | SurveyDocument | 既存設問の文脈 |
+| document | SurveyDocument | 既存設問の文脈。`survey` で欠落・`questions` 非配列は既存0件扱い |
 | event_title | string | 題名。空可だが渡す想定 |
 | focus_index | int | **`prompt` / `choices` で必須** (非 null)。`survey` では不要 (あっても無視) |
 

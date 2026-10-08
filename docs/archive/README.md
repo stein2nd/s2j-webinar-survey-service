@@ -9,7 +9,7 @@
 * 実装: `impl-<slug>/`
 * 改修: `mod-<slug>/`
 
-各フォルダーには `modification.md` / `status.md` / `test-results.md` の三点を置く。
+各フォルダーには `modification.md` / `status.md` / `test-results.md` の三点を置きます。
 
 ## 索引
 
@@ -17,4 +17,4 @@
 | --- | --- | --- | --- | --- |
 | — | (まだなし) | — | 最初のイニシアチブ完了時に行を足す | |
 
-機械成果物 (カバレッジ HTML 等) はここには置かない。置き場は [../testing.md](../testing.md) の `/coverage/` である。
+機械成果物 (カバレッジ HTML 等) はここには置きません。置き場は [../testing.md](../testing.md) の `/coverage/` です。

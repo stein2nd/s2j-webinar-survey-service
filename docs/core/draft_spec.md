@@ -31,14 +31,16 @@
 
 どれも、1回の操作で1本の依頼文です。
 
-`build_draft_prompt` は `{ prompt_text, requested_count }` を返す。件数の正本はここであり、プラグインが別途計算しない。`parse_draft_response` には同じ `requested_count` を `$context` で渡す。**`requested_count` が0になりうるのは kind `survey` だけ**である。
+`build_draft_prompt` は `{ prompt_text, requested_count }` を返します。件数の正本はここであり、プラグインが別途計算しません。`parse_draft_response` には同じ `requested_count` を `$context` で渡します。**`requested_count` が0になりうるのは kind `survey` だけ** です。
+
+kind `survey` の既存設問数は `$context['document']['questions']` の件数です。`document` 欠落、または `questions` が配列でない場合は **既存0件扱い** とします (例外にしない)。
 
 focus の検証 (`prompt` / `choices`):
 
-* `focus_index` は必須の `int` (null 不可)。欠落、null、範囲外 → `InvalidArgumentException` (`build` と `parse` の両方)
+* `focus_index` は、必須の `int` (null 不可)。欠落、null、範囲外 → `InvalidArgumentException` (`build` と `parse` の両方)
 * `choices` で focus の `answer_kind` が `single` / `multiple` 以外 → 同じく例外
-* `prompt` は範囲内ならどの答え方でもよい
-* `survey` では `focus_index` は不要 (あっても無視)
+* `prompt` は、範囲内なら、どの答え方でもよい
+* `survey` では、`focus_index` は不要 (あっても無視)
 
 ## 依頼文に含める規則 (`survey`)
 
@@ -48,7 +50,7 @@ focus の検証 (`prompt` / `choices`):
 
 ## 候補の形
 
-候補は、文書の Question と同じ **Zoom 非依存** の形です ([document_spec.md](./document_spec.md))。Zoom の `type` や `rating_min_value` などは載せません。人が採用したあと `evaluate` に渡せるようにします。
+候補は、文書の Question と同じ **Zoom 非依存** の形です ([document_spec.md](./document_spec.md))。Zoom の `type` や `rating_min_value` などは、載せません。人が採用したあと `evaluate` に渡せるようにします。
 
 ### 共通 (kind が `survey` または `prompt`)
 
@@ -68,10 +70,10 @@ focus の検証 (`prompt` / `choices`):
 | `short` / `long` | 空配列、またはキーなし | 載せない。文字数欄は持たない | 載せない |
 | `rating` | 空配列、またはキーなし | 整数で `score_min` < `score_max`。欠けていれば目安として `0` と `10` を候補に載せる | 空文字可。モデルが返したら入れてよい |
 
-* `short` と `long` の文字数は文書にも候補にも持たない。添付時に Zoom API のデフォルトに任せる (写像は webinar-service)。
-* `evaluate` は `score_min` / `score_max` を埋め込まない。候補への目安埋めは `parse_draft_response` だけである。
+* `short` と `long` の文字数は、文書にも候補にも持たない。添付時に Zoom API のデフォルトに任せる (写像は webinar-service)。
+* `evaluate` は、`score_min` / `score_max` を埋め込まない。候補への目安埋めは、`parse_draft_response` だけである。
 * kind が `choices` の場合は、候補は `choices` (短いラベルの列) を主とし、他フィールドは省略してよい。プラグインが開いている設問にマージする。
-* 形を満たさない候補は捨てる。すべて捨てた場合は候補列は空である。
+* 形を満たさない候補は、捨てる。すべて捨てた場合は、候補列は空である。
 
 ### kind が `prompt`
 

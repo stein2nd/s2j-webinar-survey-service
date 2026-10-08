@@ -8,7 +8,7 @@
 
 ## 設計意図 (ゴール)
 
-内部実装を意識せず、保存のたびに評価し、ボタンの場合だけ下書きを分解できるようにします。
+内部実装を意識せず、プラグインが評価を呼ぶときと、ボタンの場合だけ下書きを分解できるようにします。タイミングの正本はプラグイン仕様です。
 
 ## 非対象
 
@@ -24,7 +24,9 @@ composer require s2j/webinar-survey-service
 
 Packagist のパッケージ名だけを require します。`repositories` に `VCS` / `path` は書きません (他の S2J プラグインと同じ)。
 
-## 保存のたびに評価する
+## プラグインが評価を呼ぶとき
+
+本ライブラリは呼び出しタイミングを決めません。いつ `evaluate` するかの正本は [S2J Webinar Survey の docs/](https://github.com/stein2nd/s2j-webinar-survey/blob/main/docs/specs.md) です (初版は、明示の投稿更新と表示専用の発火)。
 
 ```php
 use function S2J\WebinarSurveyService\evaluate;
@@ -33,7 +35,7 @@ $result = evaluate( $document, $max_questions );
 
 // $result['document']['status'] が draft | ready
 // $result['deficiencies'] / $result['advice'] を適切なメッセージ文にしてパネルに (i18n 経由)
-// 助言コードはメタの正本に残さない。開いた際に再計算する
+// 助言コードはメタの正本に残さない。表示専用の再計算タイミングはプラグイン仕様
 ```
 
 `$max_questions` はサイト設定です。未設定ならプラグインが6を渡します。
@@ -78,10 +80,12 @@ flowchart TD
   F --> G["コネクタ 1 回"]
   G --> H["parse_draft_response"]
   H --> I["候補を表示"]
-  I --> J["採用後に evaluate"]
+  I --> J["採用後は、プラグインが表示専用 evaluate"]
 ```
+
+採用直後の表示専用 `evaluate` と、メタに書く投稿保存時の `evaluate` の切り分けは、プラグイン仕様です。
 
 ## 関連
 
 * PHP API: [php_api_spec.md](./php_api_spec.md)
-* プラグイン仕様: [S2J Webinar Survey specs](https://github.com/stein2nd/s2j-webinar-survey/blob/main/docs_mod/specs.md)
+* プラグイン仕様: [S2J Webinar Survey specs](https://github.com/stein2nd/s2j-webinar-survey/blob/main/docs/specs.md)

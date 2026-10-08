@@ -2,7 +2,7 @@
 目的：「README と docs の整合、用語」の明文化
 -->
 
-# S2J Webinar Survey Service - ドキュメンテーションガバナンス
+# S2J Webinar Survey Service - ドキュメンテーション・ガバナンス
 
 本ドキュメントは、ユーザー向け説明と仕様の **整合ルール** を定義します。
 

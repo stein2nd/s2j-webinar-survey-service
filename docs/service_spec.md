@@ -8,7 +8,7 @@
 
 本ドキュメントは、S2J Webinar Survey Service の初期設計における、サービス全体の統合の見取り図を定義します。
 
-呼び出す WordPress プラグインは [S2J Webinar Survey](https://github.com/stein2nd/s2j-webinar-survey) です。プラグイン仕様は [docs_mod/specs.md](https://github.com/stein2nd/s2j-webinar-survey/blob/main/docs_mod/specs.md) です。
+呼び出す WordPress プラグインは [S2J Webinar Survey](https://github.com/stein2nd/s2j-webinar-survey) です。プラグイン仕様は [docs/specs.md](https://github.com/stein2nd/s2j-webinar-survey/blob/main/docs/specs.md) です。
 
 本ライブラリは **WordPress 非依存** です。WP フック、設定画面、HTTP の実行、Zoom への送信、モデルの呼び出しは扱いません。運営者が書いた設問を検査し、回答の負担と、次回の企画に使う目的について、助言のコードを返します。下書きを頼む場合は、依頼文の組み立てと、返ってきた文の分解までを持ちます。採用前の文は文書に書きません。
 
@@ -168,7 +168,7 @@ status                     draft | ready
 
 ## プラグインの責務 (境界。詳細はプラグイン仕様)
 
-プラグイン仕様の詳細は [S2J Webinar Survey の docs_mod/specs.md](https://github.com/stein2nd/s2j-webinar-survey/blob/main/docs_mod/specs.md) です。ここには境界だけを置きます。
+プラグイン仕様の詳細は [S2J Webinar Survey の docs/specs.md](https://github.com/stein2nd/s2j-webinar-survey/blob/main/docs/specs.md) です。ここには境界だけを置きます。
 
 | 責務 | 内容 |
 | --- | --- |
@@ -287,3 +287,4 @@ enum 全体 (初版では後ろ3つを送らない) は、`single` / `multiple` 
 | 2026-10-07 | `requested_count` 0は `survey` のみ。`focus_index` は kind 別に必須を明確化。bool は coerce、用語はデフォルト値に統一、と記録 |
 | 2026-10-07 | 契約表を入力/正規化後で分離。bool coerce を明示リストにし `(bool)` キャストを使わない、と記録 |
 | 2026-10-07 | 確定仕様として `docs/` に移行。改訂案は `docs_mod/` で起草する、と記録 |
+| 2026-10-09 | プラグイン仕様リンクを docs/ に更新。usage の評価タイミング注記、survey の document 欠落は既存0件、と記録 |
