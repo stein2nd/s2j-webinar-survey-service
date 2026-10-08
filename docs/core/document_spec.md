@@ -49,7 +49,7 @@ status                     draft | ready
 | `multiple` | 複数選択 | 複数選択 |
 | `short` | 短い自由記述 | 短い回答 |
 | `long` | 長い自由記述 | 長い回答 |
-| `rating` | 数値の段階評価 | レーティングスケール |
+| `rating` | 数値の段階評価 | レーティング・スケール |
 
 * 選択式は `single` と `multiple` である。`choices` を使う。
 * `rating` は、選択肢の列にはしない。`score_*` とラベルを使う。
