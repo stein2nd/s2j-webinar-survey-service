@@ -64,7 +64,7 @@ status                     draft | ready
 
 ## 正規化方針
 
-`evaluate` (および下書き API が文書を読む場合) は、検査の前に次を行う。
+`evaluate` (および下書き API が文書を読む場合) は、検査の前に下記を行う。
 
 * `questions` の順は、呼び出し側が渡した順を保つ。
 * 空文字の選択肢は、「空でない選択肢」に数えない。
@@ -78,7 +78,7 @@ status                     draft | ready
   * `answer_kind` が `rating` 以外の場合、`score_min` / `score_max` / `label_low` / `label_high` を落とす
   * 空の `choices` は空配列またはキーなしにそろえてよい
   * **空でない `choices` が `short` / `long` / `rating` にある場合は除去しない**。検査で `choices_unexpected` にする
-* `required` / `identifies_respondent` の coerce (不足コードは増やさない)。**PHP の `(bool)` キャストそのものにはしない** (`(bool) "false"` が真になるため)。次だけを真／偽とし、それ以外は `false` にフォールバックする:
+* `required` / `identifies_respondent` の coerce (不足コードは増やさない)。**PHP の `(bool)` キャストそのものにはしない** (`(bool) "false"` が真になるため)。下記だけを真／偽とし、それ以外は `false` にフォールバックする:
   * 真: `true`、`1`、`"1"`、`"true"`、`"yes"`、`"on"` (文字列は大小無視してよい)
   * 偽: `false`、`0`、`"0"`、`""`、`null`、キー欠落
   * それ以外 (例: `"false"` 文字列、配列、オブジェクト) → `false`

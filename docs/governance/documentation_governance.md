@@ -74,7 +74,7 @@
 
 1. **開始** … `docs_mod/` に三点セットを置く (必要なら仕様ドラフトも)
 2. **作業** … 合意した仕様は都度 `docs/` に反映する。証跡三点は `docs_mod/` で更新する
-3. **フリーズ** … 次をすべて満たしたら `docs/archive/impl-<slug>/` または `docs/archive/mod-<slug>/` にコピーして固定する
+3. **フリーズ** … 下記をすべて満たしたら `docs/archive/impl-<slug>/` または `docs/archive/mod-<slug>/` にコピーして固定する
    * 該当する `docs/` 仕様が最新である
    * `test-results.md` に FAIL がない (WARN は理由付きのみ可)
    * CHANGELOG の unreleased に一行ある

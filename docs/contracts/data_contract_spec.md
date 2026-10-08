@@ -49,10 +49,10 @@ PHP の公開面と Core の間で共有する Source of Truth とします。
 | questions[].identifies_respondent | bool | 任意 | あり (欠落は `false`) | 回答者を特定する問いが。coerce は document_spec |
 | questions[].purpose | string | 任意 | あり (欠落は `""`) | 企画上の目的。空可 |
 | questions[].choices | string[] | 任意 | あり得る (欠落は `[]` 可) | `single` / `multiple` で使用 |
-| questions[].score_min | int | 任意 | `rating` の場合残る | `rating` で使用。欠けは不足 |
-| questions[].score_max | int | 任意 | `rating` の場合残る | `rating` で使用。欠けは不足 |
-| questions[].label_low | string | 任意 | `rating` の場合残ってよい | `rating`。空可 |
-| questions[].label_high | string | 任意 | `rating` の場合残ってよい | `rating`。空可 |
+| questions[].score_min | int | 任意 | `rating` の場合、残る | `rating` で使用。欠けは不足 |
+| questions[].score_max | int | 任意 | `rating` の場合、残る | `rating` で使用。欠けは不足 |
+| questions[].label_low | string | 任意 | `rating` の場合、残ってよい | `rating`。空可 |
+| questions[].label_high | string | 任意 | `rating` の場合、残ってよい | `rating`。空可 |
 
 ## 入力: 上限
 
@@ -105,7 +105,7 @@ PHP の公開面と Core の間で共有する Source of Truth とします。
 
 | フィールド | 型 | 説明 |
 | --- | --- | --- |
-| prompt_text | string | コネクタに送る文。`survey` で依頼しない場合空 |
+| prompt_text | string | コネクタに送る文。`survey` で依頼しない場合、空 |
 | requested_count | int | `survey` は `max(0, max_questions − 既存)` (**0になりうるのは `survey` のみ**)。`prompt` / `choices` は常に1 (不正時は例外で返さない) |
 
 ## 入力: 下書き分解 (`parse_draft_response` の `$context`)

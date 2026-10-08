@@ -33,7 +33,7 @@ $result = evaluate( $document, $max_questions );
 
 // $result['document']['status'] が draft | ready
 // $result['deficiencies'] / $result['advice'] を日本語にしてパネルに
-// 助言コードはメタの正本に残さない。開いた場合に再計算する
+// 助言コードはメタの正本に残さない。開いた際に再計算する
 ```
 
 `$max_questions` はサイト設定です。未設定ならプラグインが6を渡します。

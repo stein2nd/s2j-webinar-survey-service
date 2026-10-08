@@ -33,15 +33,15 @@ WordPress も Zoom もモデル API も使わずに、検査・助言・下書�
 
 * 不足コードは、各コードについて真になる入力を1件以上
 * 助言コードも同様
-* `max_questions` が1未満の場合 `InvalidArgumentException`
+* `max_questions` が1未満の場合、`InvalidArgumentException`
 * `ready` で助言だけが残るケース
 * 正規化: 欠落の `required` 等をデフォルト値で埋める。`rating` 以外の `score_*` を除去する。bool coerce (`"1"` → true、`"false"` 文字列 → false。`(bool)` キャストではない)
 * `build_draft_prompt` が `{ prompt_text, requested_count }` を返す (`survey` の件数式。0は `survey` のみ。`prompt` / `choices` は1か例外)
 * `survey` 下書き: `requested_count` での切り詰め、分解不能で空
-* 下書き候補: `rating` に `score_min` / `score_max` (欠けたら 0 / 10)、`long` / `short` に文字数欄を載せない、Zoom キー名を載せない
+* 下書き候補: `rating` に `score_min` / `score_max` (欠けた場合、0/10)、`long` / `short` に文字数欄を載せない、Zoom キー名を載せない
 * `evaluate` は欠けた `score_*` を埋め込まず `rating_bounds_invalid`
 * kind `prompt`: `parse_draft_response` が `$context` の focus から `answer_kind` 等を引き継ぐ
-* `choices` で focus が `short` などの場合 `InvalidArgumentException` (`build` / `parse`)
+* `choices` で focus が `short` などの場合、`InvalidArgumentException` (`build` / `parse`)
 * `choices` を `short` に付けた場合の `choices_unexpected`
 * `rating_bounds_invalid` の境界 (`score_min === score_max` を含む)
 
@@ -67,7 +67,7 @@ PHPUnit などの **機械成果物** はリポジトリにコミットしない
 | PHPUnit キャッシュ | `.phpunit.cache/` / `.phpunit.result.cache` | 無視 |
 | 配布 tarball | `/artifacts/` (既存) | 無視 (`.gitkeep` のみ) |
 
-`phpunit.xml` の coverage / logfile は `/coverage/` 向けに設定する。CI では Actions artifact で渡せばよく、専用の恒久フォルダは増やさない。
+`phpunit.xml` の coverage / logfile は `/coverage/` 向けに設定する。CI では Actions artifact で渡せばよく、専用の恒久フォルダーは増やさない。
 
 人が読む合格証跡 (`test-results.md` 等) は `/coverage/` には置かず、イニシアチブ証跡として [governance/documentation_governance.md](./governance/documentation_governance.md) に従う。
 
