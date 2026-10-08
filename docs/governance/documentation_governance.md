@@ -25,7 +25,7 @@
 ## 用語
 
 * 正式なコード名は [../contracts/data_dictionary.md](../contracts/data_dictionary.md) に従う。
-* 画面の日本語 (単一選択、短い回答など) はプラグイン仕様の用語である。ライブラリ docs では `answer_kind` を優先する。
+* 画面の表示文言 (単一選択、短い回答など) はプラグイン仕様の用語である。ライブラリ docs では `answer_kind` を優先する。仕様文では「日本語を表示」ではなく「適切なメッセージ文を表示」と書く (プラグイン側の i18n 前提)。
 * Zoom の `type` (`short_answer` 等) を、本ライブラリの `answer_kind` と混同して書かない。
 
 ## Lint

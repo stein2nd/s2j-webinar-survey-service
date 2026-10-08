@@ -32,7 +32,7 @@ use function S2J\WebinarSurveyService\evaluate;
 $result = evaluate( $document, $max_questions );
 
 // $result['document']['status'] が draft | ready
-// $result['deficiencies'] / $result['advice'] を日本語にしてパネルに
+// $result['deficiencies'] / $result['advice'] を適切なメッセージ文にしてパネルに (i18n 経由)
 // 助言コードはメタの正本に残さない。開いた際に再計算する
 ```
 

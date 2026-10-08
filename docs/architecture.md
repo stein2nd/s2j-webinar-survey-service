@@ -61,7 +61,7 @@ s2j-webinar-survey-service/
     └── bootstrap.php
 ```
 
-**公開面は名前空間関数の3つだけ**です。正本は [php_api_spec.md](./interfaces/php_api_spec.md) です。`Core\*.php` は内部実装であり、呼び出し側は直接使いません。Singleton やサービスロケータは使いません。
+**公開面は名前空間の関数の3つだけ** です。正本は [php_api_spec.md](./interfaces/php_api_spec.md) です。`Core\*.php` は内部実装であり、呼び出し側は直接使いません。Singleton やサービスロケータは使いません。
 
 ## 技術スタック
 
@@ -79,7 +79,7 @@ s2j-webinar-survey-service/
 | 置き場 | 中身 |
 | --- | --- |
 | 本ライブラリ | 計算 |
-| S2J Webinar Survey | 編集、保存、助言の日本語、コネクタ、上限のサイト設定 |
+| S2J Webinar Survey | 編集、保存、助言のメッセージ表示 (i18n)、コネクタ、上限のサイト設定 |
 | S2J Webinar / webinar-service | Zoom 添付 HTTP と設問型写像 |
 
 ## 関連ドキュメント
