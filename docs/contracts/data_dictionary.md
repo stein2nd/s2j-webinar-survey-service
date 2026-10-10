@@ -21,13 +21,15 @@ Contracts 層における意味定義の Source of Truth とします。
 
 ### Question
 
-1件の設問です。`prompt` と `answer_kind` を必ず持ちます。
+1件の設問です。検査では `prompt` と `answer_kind` が必要です。欠落は不足であり、正規化でキーは足しません ([../core/document_spec.md](../core/document_spec.md))。
 
 ### answer_kind
 
 答え方です。値は `single` / `multiple` / `short` / `long` / `rating` のみです。Zoom の `type` ではありません。
 
 ### status
+
+文書状態のコードです。日本語の「下書き」とは別物です (下書きは DraftKind / candidate)。
 
 | 値 | 意味 |
 | --- | --- |
@@ -56,22 +58,22 @@ Zoom の一覧向けの名前です。回答者には出しません。本ライ
 
 ### choices
 
-`single` / `multiple` の選択肢ラベルです。空文字は「空でない選択肢」に数えません。
+`single` / `multiple` の選択肢ラベルです。正規化で空文字要素を除去します。除去後の要素だけを「空でない選択肢」に数えます。
 
 ### score_min / score_max
 
-`rating` の境界です。整数で、`score_min` < `score_max` です。目安は0と10です。
+`rating` の境界です。PHP の `is_int` である整数で、`score_min` < `score_max` です。目安は0と10です。`"5"` や `5.0` は coerce せず不足です。
 
 * `evaluate` では埋め込まない。欠けていれば不足 `rating_bounds_invalid` です ([../core/validation_spec.md](../core/validation_spec.md))。
 * `parse_draft_response` では、候補の分解時に欠けていれば目安0と10を候補に載せます ([../core/draft_spec.md](../core/draft_spec.md))。
 
 ### DraftKind
 
-下書き依頼の種類です。`survey` / `prompt` / `choices` です。
+下書き依頼の種類です (文書の `status: draft` ではない)。値は `survey` / `prompt` / `choices` です。日本語では「アンケート」「設問文」「選択肢」と呼んでよいが、契約上の kind は英単語です。
 
 ### candidate
 
-人が採用する前の設問または選択肢の断片です。文書の正本には入りません。形は文書の Question と同じ Zoom 非依存の欄です。答え方ごとの詳細は [../core/draft_spec.md](../core/draft_spec.md) です。Zoom の `rating_min_value` などは使いません。
+人が採用する前の **下書き候補** です。文書の正本には入りません。kind `survey` / `prompt` は文書の Question と同じ Zoom 非依存の形です。kind `choices` は `{ "choices": [...] }` を主とする断片です。詳細は [../core/draft_spec.md](../core/draft_spec.md) です。Zoom の `rating_min_value` などは使いません。
 
 ### requested_count
 

@@ -68,8 +68,8 @@ Zoom にアンケートとして付けるリクエストは、[S2J Webinar Servi
 | --- | --- |
 | 検査 | 内部名、設問文、答え方ごとの欄。足りなければ状態は `draft` |
 | 助言 | 総数、順番、回答の躊躇、企画上の目的。状態は変えない |
-| 文書 | 下記の形にそろえて返す。欠落のデフォルト値埋めと、答え方に使わない既知キーの除去を含む。呼び出した順を保つ |
-| 下書き | 依頼文と `requested_count` を返し、返却文を context 付きで候補に分ける。文書には書かない |
+| 文書 | 下記の形にそろえて返す。欠落のデフォルト値埋め (表のキーのみ)、空文字 choices 除去、答え方に使わない既知キーの除去を含む。呼び出した順を保つ |
+| 下書き候補 | 依頼文と `requested_count` を返し、返却文を context 付きで候補に分ける。文書には書かない |
 
 ## 文書
 
@@ -105,7 +105,7 @@ status                     draft | ready
 
 `purpose` は、運営者のためです。回答者には出しません。空でも `ready` にはできます。その設問には助言 `purpose_missing` を付けます。
 
-状態は、下記のとおりです。
+状態は、下記のとおりです。コード値だけを使います。日本語の「下書き」は下書き候補 (DraftKind) を指し、文書状態の呼び名にはしません。
 
 | status | 意味 |
 | --- | --- |
@@ -144,21 +144,21 @@ status                     draft | ready
 
 文章の誘導と、1つの設問に問いが2つあること (二重の問い) は、初版では判定しません。保存のたびに自動では見ません。誤検知のない機械規則がいまないためです。運営者への周知は、プラグインのパネル冒頭の「大事な指針」が持ちます。あとで足すなら、保存を拒まない助言か、ボタンで頼む一文の見直しに限ります。`ready` は変えません。不足コードにはしません。
 
-## 下書き
+## 下書き候補
 
-下書きは、人が採用する前の候補です。本ライブラリはモデルを呼びません。プラグインが、ボタンを押した際に、組み立てた依頼文をサイトのコネクタに1回送り、返ってきた文を本ライブラリが候補に分けます。
+下書き候補は、人が採用する前の候補です (文書の `status: draft` ではない)。本ライブラリはモデルを呼びません。プラグインが、ボタンを押した際に、組み立てた依頼文をサイトのコネクタに1回送り、返ってきた文を本ライブラリが候補に分けます。
 
-依頼は3種類です。どれも1回の操作で1本の依頼文です。
+依頼は3種類です (DraftKind)。どれも1回の操作で1本の依頼文です。
 
-| 種類 | 件数 | 中身 |
-| --- | --- | --- |
-| アンケート | 上限から、すでに文書にある設問数を引いた数。文書が空なら上限そのもの | 各件は候補の形 (Question)。企画上の目的は空 |
-| 設問文 | いま開いている1件 | 設問文が一文 |
-| 選択肢 | いま開いている `single` または `multiple` の1件 | 短いラベルを少数 |
+| 種類 (説明) | kind | 件数 | 中身 |
+| --- | --- | --- | --- |
+| アンケート | `survey` | 上限から、すでに文書にある設問数を引いた数。文書が空なら上限そのもの | 各件は候補の形 (Question)。企画上の目的は空 |
+| 設問文 | `prompt` | いま開いている1件 | 設問文が一文 |
+| 選択肢 | `choices` | いま開いている `single` または `multiple` の1件 | `{ "choices": [...] }` 断片。短いラベルを少数 |
 
 アンケートの依頼では、`single` / `multiple` / `rating` を先にし、自由記述 (`short` または `long`) は最後に多くて1件、と依頼文に書きます。回答者を特定する問いと、必須の自由記述は依頼しません。候補の `required` と `identifies_respondent` は偽、`purpose` は空です。
 
-候補の形は、文書の Question と同じ Zoom 非依存の形です。`rating` の目安0/10埋めは下書き分解だけです (`evaluate` では埋めません)。`build_draft_prompt` は `{ prompt_text, requested_count }` を返す (`requested_count` が0になりうるのは `survey` のみ。`prompt` / `choices` は常に1か例外)。`parse_draft_response` はその件数と文脈で切り詰め・引き継ぎします。kind `prompt` の引き継ぎはライブラリ内です。`prompt` / `choices` の `focus_index` は必須の int です。詳細は [core/draft_spec.md](./core/draft_spec.md) です。
+候補の形は、kind `survey` / `prompt` では文書の Question と同じ Zoom 非依存の形です。kind `choices` は断片です。`rating` の目安0/10埋めは下書き分解だけです (`evaluate` では埋めません)。`build_draft_prompt` は `{ prompt_text, requested_count }` を返す (`requested_count` が0になりうるのは `survey` のみ。`prompt` / `choices` は常に1か例外)。`parse_draft_response` はその件数と文脈で切り詰め・引き継ぎします。kind `prompt` の引き継ぎはライブラリ内です。`prompt` / `choices` の `focus_index` は必須の int です。詳細は [core/draft_spec.md](./core/draft_spec.md) です。
 
 渡してよいのは、イベントの題名、各設問の答え方、運営者が書いた企画上の目的、すでに文書にある設問文です。登壇者のメールと申込者の情報は渡しません。
 
@@ -280,7 +280,7 @@ enum 全体 (初版では後ろ3つを送らない) は、`single` / `multiple` 
 | 2026-10-07 | 初版5種の Zoom `type` を確定 (`single` / `multiple` / `short_answer` / `long_answer` / `rating_scale`)。本ライブラリは Zoom フィールドを持たない、と記録 |
 | 2026-10-07 | Similarity の docs 構成に倣い、実装向け仕様を `docs_mod/specs.md` 起点で分割した、と記録 |
 | 2026-10-07 | 初版到達点に下書きの組立・分解を含める。`ready` は S2J Webinar が読む。`max_questions` が1未満は例外、と記録 |
-| 2026-10-07 | 空でない選択肢がある場合、`choices_unexpected`。公開関数名は snake_case。下書きの `max_questions` 未満も例外、と記録 |
+| 2026-10-07 | 空でない選択肢がある場合、`choices_unexpected`。公開関数名は snake_case。下書きの `max_questions` が1未満は例外、と記録 |
 | 2026-10-07 | 下書き候補の形を文書の Question にそろえる。`rating` / `long` / `short` の欄と Zoom 非依存を [core/draft_spec.md](./core/draft_spec.md) に記録 |
 | 2026-10-07 | `score_*` は evaluate で埋めず下書き分解だけ目安埋める。`prompt` は focus から引き継ぐ。規則正本は core/。公開面は関数3つ、と記録 |
 | 2026-10-07 | `build_draft_prompt` は件数付き戻り。`parse` は context で引き継ぎ。正規化はデフォルト値埋めと不要キー除去。focus 不整合は build 時例外、と記録 |
@@ -288,3 +288,4 @@ enum 全体 (初版では後ろ3つを送らない) は、`single` / `multiple` 
 | 2026-10-07 | 契約表を入力/正規化後で分離。bool coerce を明示リストにし `(bool)` キャストを使わない、と記録 |
 | 2026-10-07 | 確定仕様として `docs/` に移行。改訂案は `docs_mod/` で起草する、と記録 |
 | 2026-10-09 | プラグイン仕様リンクを docs/ に更新。usage の評価タイミング注記、survey の document 欠落は既存0件、と記録 |
+| 2026-10-10 | 正規化でキーを足さない欄を契約と一致。助言の多重度、trim は判定のみ、空文字 choices 除去、`score_*` は `is_int`、`max_questions` 欠落は例外、公開関数は autoload.files。status と下書き候補の用語を分離、と記録 |

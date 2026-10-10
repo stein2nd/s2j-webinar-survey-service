@@ -31,7 +31,7 @@ Similarity Service の SDK 仕様に相当する、本ライブラリ向けの�
 
 ## 公開 API (初版)
 
-名前は実装時に PSR-4の配置に落とし込みます。意味は変えません。
+公開3関数は `composer.json` の **`autoload.files`** で載せます (例: `src/functions.php`、または関数ごとの PHP ファイル)。`Core\*` は PSR-4の内部実装です。意味は変えません。
 
 ### evaluate
 
@@ -47,8 +47,8 @@ Similarity Service の SDK 仕様に相当する、本ライブラリ向けの�
 function evaluate(array $document, int $max_questions): array
 ```
 
-* `$max_questions` が1未満の場合は `InvalidArgumentException` とする。サイト設定の誤りではなく、呼び出し側のプログラマー誤りである。助言コードにも不足コードにもしない。
-* 入力は正規化する ([../core/document_spec.md](../core/document_spec.md))。欠落フィールドのデフォルト値埋め、bool の明示 coerce、答え方に使わない既知キーの除去を含む。
+* `$max_questions` が欠落扱いに相当する不正 (非 int を渡す等) や、値が1未満の場合は `InvalidArgumentException` とする。サイト設定の誤りではなく、呼び出し側のプログラマー誤りである。助言コードにも不足コードにもしない。
+* 入力は正規化する ([../core/document_spec.md](../core/document_spec.md))。欠落フィールドのデフォルト値埋め (表にあるキーのみ)、bool の明示 coerce、空文字 `choices` 要素の除去、答え方に使わない既知キーの除去を含む。`internal_name` / `questions` / `prompt` / `answer_kind` の欠落キーは足さない。
 
 ### build_draft_prompt
 
@@ -65,7 +65,7 @@ function build_draft_prompt(string $kind, array $context): array
 ```
 
 * 戻りは、コネクタに送る依頼文と、その依頼で期待する件数の組である。`parse_draft_response` には、同じ `requested_count` を渡す。
-* `$context['max_questions']` が必要な場合 (`survey`)、値が1未満なら `InvalidArgumentException` とする。`evaluate` と同じ。
+* kind `survey` では `$context['max_questions']` が必須の `int` である。欠落、非 int、または値が1未満なら `InvalidArgumentException` とする。`evaluate` と同じ。
 * `survey` の既存設問数は、`$context['document']['questions']` から数える。`document` 欠落、または `questions` が配列でない場合は、**既存0件扱い** とする (例外にしない)。
 * `survey` の `requested_count` は `max(0, max_questions − 既存設問数)` である。0の場合は `prompt_text` を空文字、`requested_count` を0とし、プラグインは送らない。**`requested_count` が0になりうるのは `survey` だけ**である。
 * `prompt` / `choices` は focus が正しければ常に `requested_count` は1、`prompt_text` は非空である。不正なら例外とし、0や空文字は返さない。

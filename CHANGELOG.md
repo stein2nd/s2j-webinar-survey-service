@@ -2,6 +2,15 @@
 
 ## unreleased
 
+## 0.0.1 - 2026-10-10
+
+### Changed
+
+* 正規化: `internal_name` / `questions` / `prompt` / `answer_kind` は欠落キーを足さない。契約表を `document_spec` に合わせた
+* 助言の多重度を表で固定。trim は判定のみ。空文字 `choices` 要素は除去。`score_*` は `is_int` のみ
+* `survey` の `max_questions` 欠落は例外。公開3関数は `autoload.files`。下書き分解の厳密なテンプレートは非目標と明記
+* 文書 `status` と下書き候補 (DraftKind) の用語を分離。DraftKind 表に English kind を併記。例外文の Similarity 残滓を除去。改訂履歴の `max_questions` 文言を現行に合わせた
+
 ## 0.0.1 - 2026-10-09
 
 ### Fixed

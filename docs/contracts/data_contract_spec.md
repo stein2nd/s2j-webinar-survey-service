@@ -17,7 +17,7 @@ PHP の公開面と Core の間で共有する Source of Truth とします。
 
 意味と制約の詳細は [../core/document_spec.md](../core/document_spec.md) と [data_dictionary.md](./data_dictionary.md) です。
 
-「入力」は呼び出し側が渡す前の欠落可否、「正規化後」は検査前の文書にその欄があるかを表します。欠落のデフォルト埋めは [../core/document_spec.md](../core/document_spec.md) が正です。
+「入力」は呼び出し側が渡す前の欠落可否、「正規化後」は検査前の文書にその欄があるかを表します。欠落のデフォルト埋めと「キーを足さない」欄の扱いは [../core/document_spec.md](../core/document_spec.md) が正です。
 
 ```json
 {
@@ -41,14 +41,14 @@ PHP の公開面と Core の間で共有する Source of Truth とします。
 
 | フィールド | 型 | 入力 | 正規化後 | 説明 |
 | --- | --- | --- | --- | --- |
-| internal_name | string | 任意 (欠落・空は不足) | あり | 一覧用。回答者には出さない |
-| questions | Question[] | 任意 (欠落・0件は不足) | あり | 順序あり |
-| questions[].prompt | string | 任意 (欠落・空は不足) | あり | 回答者に見せる文 |
-| questions[].answer_kind | enum | 任意 (欠落・不正は不足) | あり | `single` / `multiple` / `short` / `long` / `rating` |
+| internal_name | string | 任意 (欠落・空は不足) | 欠落可 (キーは足さない。判定は空と同じ) | 一覧用。回答者には出さない |
+| questions | Question[] | 任意 (欠落・0件は不足) | 欠落可 (キーは足さない。判定は0件と同じ) | 順序あり |
+| questions[].prompt | string | 任意 (欠落・空は不足) | 欠落可 (キーは足さない。判定は空と同じ) | 回答者に見せる文 |
+| questions[].answer_kind | enum | 任意 (欠落・不正は不足) | 欠落可 (デフォルトなし。キーは足さない) | `single` / `multiple` / `short` / `long` / `rating` |
 | questions[].required | bool | 任意 | あり (欠落は `false`) | 必須か。coerce は document_spec |
 | questions[].identifies_respondent | bool | 任意 | あり (欠落は `false`) | 回答者を特定する問いが。coerce は document_spec |
 | questions[].purpose | string | 任意 | あり (欠落は `""`) | 企画上の目的。空可 |
-| questions[].choices | string[] | 任意 | あり得る (欠落は `[]` 可) | `single` / `multiple` で使用 |
+| questions[].choices | string[] | 任意 | あり得る (欠落は `[]` 可。空文字要素は除去) | `single` / `multiple` で使用 |
 | questions[].score_min | int | 任意 | `rating` の場合、残る | `rating` で使用。欠けは不足 |
 | questions[].score_max | int | 任意 | `rating` の場合、残る | `rating` で使用。欠けは不足 |
 | questions[].label_low | string | 任意 | `rating` の場合、残ってよい | `rating`。空可 |
@@ -87,7 +87,7 @@ PHP の公開面と Core の間で共有する Source of Truth とします。
 | フィールド | 型 | 説明 |
 | --- | --- | --- |
 | kind | enum | 引数。`survey` / `prompt` / `choices` |
-| max_questions | int | `survey` で必須 |
+| max_questions | int | `survey` で必須。欠落、非 int、または1未満は `InvalidArgumentException` |
 | document | SurveyDocument | 既存設問の文脈。`survey` で欠落・`questions` 非配列は既存0件扱い |
 | event_title | string | 題名。空可だが渡す想定 |
 | focus_index | int | **`prompt` / `choices` で必須** (非 null)。`survey` では不要 (あっても無視) |
@@ -182,7 +182,7 @@ kind が `prompt` の場合、返却の主は新しい `prompt` です。`answer
 
 ## エラー
 
-* 初版は、例外を Domains の豊富な階層に分けない。不正な kind、不正な `focus_index`、`choices` で focus が選択式以外、などプログラマー誤りは `InvalidArgumentException` でかまわない。
+* 初版は、例外の細分化はしない。不正な kind、不正な `focus_index`、`choices` で focus が選択式以外、などプログラマー誤りは `InvalidArgumentException` でかまわない。
 * 文書の不足は例外にせず、`deficiencies` で返す。
 
 ## 関連

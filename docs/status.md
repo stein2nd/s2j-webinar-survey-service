@@ -8,7 +8,7 @@
 完了したイニシアチブの凍結状況は [archive/README.md](./archive/README.md) です。進行中の証跡三点は `docs_mod/` に置きます。
 索引は [specs.md](./specs.md) です。規則・型の Source of Truth は [core/](./core/document_spec.md) と [contracts/](./contracts/data_contract_spec.md) です ([governance/documentation_governance.md](./governance/documentation_governance.md) と同じ)。
 
-最終更新: 2026-10-07
+最終更新: 2026-10-10
 
 ## 仕様書 (参照元)
 

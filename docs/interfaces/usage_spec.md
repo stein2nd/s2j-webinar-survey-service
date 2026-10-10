@@ -8,7 +8,7 @@
 
 ## 設計意図 (ゴール)
 
-内部実装を意識せず、プラグインが評価を呼ぶときと、ボタンの場合だけ下書きを分解できるようにします。タイミングの正本はプラグイン仕様です。
+内部実装を意識せず、プラグインが評価を呼ぶ場合と、ボタンの場合だけ下書きを分解できるようにします。タイミングの正本はプラグイン仕様です。
 
 ## 非対象
 
@@ -24,7 +24,7 @@ composer require s2j/webinar-survey-service
 
 Packagist のパッケージ名だけを require します。`repositories` に `VCS` / `path` は書きません (他の S2J プラグインと同じ)。
 
-## プラグインが評価を呼ぶとき
+## プラグインが評価を呼ぶ場合
 
 本ライブラリは呼び出しタイミングを決めません。いつ `evaluate` するかの正本は [S2J Webinar Survey の docs/](https://github.com/stein2nd/s2j-webinar-survey/blob/main/docs/specs.md) です (初版は、明示の投稿更新と表示専用の発火)。
 

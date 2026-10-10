@@ -57,6 +57,8 @@ status                     draft | ready
 
 ## 状態
 
+文書の `status` はコード値だけを使う。日本語の「下書き」は [draft_spec.md](./draft_spec.md) の **下書き候補** (DraftKind) を指し、文書状態の呼び名にはしない。
+
 | status | 意味 |
 | --- | --- |
 | `draft` | 不足がある。S2J Webinar はアンケートとして読まない |
@@ -67,13 +69,16 @@ status                     draft | ready
 `evaluate` (および下書き API が文書を読む場合) は、検査の前に下記を行う。
 
 * `questions` の順は、呼び出し側が渡した順を保つ。
-* 空文字の選択肢は、「空でない選択肢」に数えない。
+* `choices` 配列内の **空文字要素は除去する**。「空でない選択肢」の数え方と配列を一致させる。
 * 未知のキーは、無視してかまわない (前方互換)。
 * **欠落のデフォルト値** (キーがない場合だけ埋める):
   * `required` → `false`
   * `identifies_respondent` → `false`
   * `purpose` → `""`
   * `choices` → `[]` (`single` / `multiple` で使う。他の答え方でも空配列にしてよい)
+* **上記以外の既知キーは欠落のままとする** (キーは足さない。不足判定では欠落を空／不正と同じに扱う):
+  * `internal_name` / `questions` / `prompt` — 欠落可。判定は空または0件と同じ
+  * `answer_kind` — 欠落可。デフォルトなし。欠落・不正は `answer_kind_invalid`
 * **答え方に使わない既知キーは除去する** (不足コードは増やさない):
   * `answer_kind` が `rating` 以外の場合、`score_min` / `score_max` / `label_low` / `label_high` を落とす
   * 空の `choices` は空配列またはキーなしにそろえてよい
@@ -82,7 +87,8 @@ status                     draft | ready
   * 真: `true`、`1`、`"1"`、`"true"`、`"yes"`、`"on"` (文字列は大小無視してよい)
   * 偽: `false`、`0`、`"0"`、`""`、`null`、キー欠落
   * それ以外 (例: `"false"` 文字列、配列、オブジェクト) → `false`
-* その他、既知キーの型が不正で直せない場合は不足にする (例: `rating` の境界が整数でない → `rating_bounds_invalid`)。
+* **文字列の trim は不足・助言の判定にだけ使う**。戻り文書の `internal_name` / `prompt` / `purpose` / 選択肢ラベルなどは、入力の文字列を書き換えない (デフォルト埋めと空文字要素の除去、不要キー除去を除く)。
+* その他、既知キーの型が不正で直せない場合は不足にする (例: `rating` の境界が整数でない → `rating_bounds_invalid`。整数は PHP の `is_int` のみ。文字列 `"5"` や `5.0` は coerce しない)。
 
 ## 関連
 

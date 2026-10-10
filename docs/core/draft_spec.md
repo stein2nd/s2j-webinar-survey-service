@@ -50,7 +50,9 @@ focus の検証 (`prompt` / `choices`):
 
 ## 候補の形
 
-候補は、文書の Question と同じ **Zoom 非依存** の形です ([document_spec.md](./document_spec.md))。Zoom の `type` や `rating_min_value` などは、載せません。人が採用したあと `evaluate` に渡せるようにします。
+* kind `survey` / `prompt` の候補は、文書の Question と同じ **Zoom 非依存** の形です ([document_spec.md](./document_spec.md))。
+* kind `choices` の候補は **断片** です。主に `{ "choices": [...] }` であり、他フィールドは省略してよい (下記)。
+* Zoom の `type` や `rating_min_value` などは載せません。人が採用したあと `evaluate` に渡せるようにします。
 
 ### 共通 (kind が `survey` または `prompt`)
 
@@ -110,6 +112,7 @@ focus の検証 (`prompt` / `choices`):
 ## 依頼文の形 (方針)
 
 * 自然言語の指示文である。モデル固有の JSON schema 強制は、初版の必須としない。
+* **初版は、返却文の厳密なテンプレートを定めない** (非目標)。分解の合格条件は「候補の形を満たすものだけ残す。満たさない・分けられない場合は候補空」である。
 * 分解側は、番号付き箇条書きや明確な区切りを期待する実装でかまわない。期待と違う場合は候補空である。
 
 詳細なプロンプト文言のテンプレートは、実装時に `Draft` モジュールに置き、本仕様の規則に従います。文言の変更は、分解のテストを同時に更新します。

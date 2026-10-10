@@ -23,13 +23,15 @@
 
 ## 助言コード
 
-| コード | 条件 |
-| --- | --- |
-| `too_many` | 設問数が、引数の上限を超える |
-| `open_before_closed` | `short` または `long` より後ろに、`single` / `multiple` / `rating` がある |
-| `required_open` | `short` または `long` が必須である |
-| `identity_not_last` | `identifies_respondent` が真の設問が、最後ではない |
-| `purpose_missing` | その設問の `purpose` が空 (trim 後) |
+| コード | 条件 | 多重度 |
+| --- | --- | --- |
+| `too_many` | 設問数が、引数の上限を超える | 文書につき1回 |
+| `open_before_closed` | `short` または `long` より後ろに、`single` / `multiple` / `rating` がある | 文書につき1回 |
+| `required_open` | `short` または `long` が必須である | 該当設問ごと |
+| `identity_not_last` | `identifies_respondent` が真の設問が、最後ではない | 文書につき1回 |
+| `purpose_missing` | その設問の `purpose` が空 (trim 後) | 該当設問ごと |
+
+「文書につき1回」は、条件が成り立つ場合にそのコードを列に1つだけ入れる。該当設問が複数でも増やさない。「該当設問ごと」は、条件に当てはまる設問の数だけ同じコードを付ける (入力順)。
 
 ## 順番の規則 (助言の根拠)
 
@@ -42,13 +44,13 @@
 
 * 上限は引数で指定する。ライブラリに初期値も下限・上限も埋めない。
 * プラグインが渡す値の目安は、サイト設定で1以上15以下、未設定時は6である。
-* `evaluate` / 下書き API に渡す `max_questions` が1未満の場合は、公開面で `InvalidArgumentException` とする ([../interfaces/php_api_spec.md](../interfaces/php_api_spec.md))。助言にも不足にもしない。
-* 設問数が `max_questions` を超える場合は `too_many` のみである。`draft` にはしない。
+* `evaluate` の `$max_questions`、および kind `survey` の `$context['max_questions']` が欠落、非 int、または1未満の場合は、公開面で `InvalidArgumentException` とする ([../interfaces/php_api_spec.md](../interfaces/php_api_spec.md))。助言にも不足にもしない。
+* 設問数が `max_questions` を超える場合は `too_many` のみである。文書の `status` は `draft` にしない。
 
-## `purpose_missing`
+## `purpose_missing` / `required_open`
 
 * `purpose` が空でも `ready` にできる。
-* 設問ごとにコードを付ける。
+* いずれも該当設問ごとにコードを付ける (上表の多重度)。
 
 ## 関連
 

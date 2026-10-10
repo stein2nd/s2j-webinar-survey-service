@@ -48,20 +48,20 @@ s2j-webinar-survey-service/
 ├── docs/                     # 確定仕様 (archive/ にイニシアチブ証跡)
 ├── docs_mod/                 # 改訂案・進行中証跡の起草用 (空でもよい)
 ├── coverage/                 # PHPUnit 生成物 (gitignore)
-├── src/
-│   ├── Contracts/            # 配列形状または不変レコード
-│   ├── Core/
-│   │   ├── Document.php      # 正規化・状態付与の入口補助
-│   │   ├── Validate.php      # 不足コード
-│   │   ├── Advise.php        # 助言コード
-│   │   └── Draft.php         # 依頼文・分解
-│   └── evaluate.php 等       # 公開関数 (evaluate / build_draft_prompt / parse_draft_response)
-└── tests/
-    ├── Unit/
-    └── bootstrap.php
+├┬─ src/
+│├── Contracts/            # 配列形状または不変レコード
+│├┬─ Core/
+││├─ Document.php      # 正規化・状態付与の入口補助
+││├─ Validate.php      # 不足コード
+││├─ Advise.php        # 助言コード
+││└─ Draft.php         # 依頼文・分解
+│└── functions.php         # 公開関数3つ (composer autoload.files。分割可)
+└┬─ tests/
+　├─ Unit/
+　└─ bootstrap.php
 ```
 
-**公開面は名前空間の関数の3つだけ** です。正本は [php_api_spec.md](./interfaces/php_api_spec.md) です。`Core\*.php` は内部実装であり、呼び出し側は直接使いません。Singleton やサービスロケータは使いません。
+**公開面は名前空間の関数の3つだけ** です (`evaluate` / `build_draft_prompt` / `parse_draft_response`)。`composer.json` の **`autoload.files`** で載せます。正本は [php_api_spec.md](./interfaces/php_api_spec.md) です。`Core\*.php` は PSR-4 の内部実装であり、呼び出し側は直接使いません。Singleton やサービスロケータは使いません。
 
 ## 技術スタック
 

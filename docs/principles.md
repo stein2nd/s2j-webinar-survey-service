@@ -53,9 +53,9 @@ flowchart TD
 * 文書の答え方は、`single` / `multiple` / `short` / `long` / `rating` である。
 * Zoom の `type` 文字列とリクエストキーは、webinar-service の写像である。
 
-### 7. 下書きは文書に書かない
+### 7. 下書き候補は文書に書かない
 
-* 候補は、人が採用するまで、文書に入らない。
+* 下書き候補 (DraftKind / candidate) は、人が採用するまで文書に入らない。文書の `status: draft` とは別である。
 * 採用後は、あらためて検査と助言の入力になる。
 
 ## 借用する原則 (エコシステム)

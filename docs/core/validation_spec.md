@@ -31,7 +31,7 @@
 | `answer_kind_invalid` | `answer_kind` が5種のどれでもない |
 | `choices_missing` | `single` または `multiple` で、空でない選択肢が2つ未満 |
 | `choices_unexpected` | `short` / `long` / `rating` なのに、空でない選択肢がある |
-| `rating_bounds_invalid` | `rating` で、`score_min` と `score_max` がそろわない、整数でない、または `score_min` が `score_max` 以上。`evaluate` は欠けた値を0/10で埋めない |
+| `rating_bounds_invalid` | `rating` で、`score_min` と `score_max` がそろわない、整数でない (`is_int` のみ。`"5"` や `5.0` は不足)、または `score_min` が `score_max` 以上。`evaluate` は欠けた値を0/10で埋めない |
 
 ## 適用順 (推奨)
 
