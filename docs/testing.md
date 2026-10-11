@@ -32,6 +32,7 @@ WordPress も Zoom もモデル API も使わずに、検査・助言・下書�
 ## 必須カバレッジ (規則)
 
 * 不足コードは、各コードについて真になる入力を1件以上
+* 同一設問に複数の不足が付くケース (安定した `deficiencies` の順序)
 * 助言コードも同様
 * `max_questions` が1未満の場合、`InvalidArgumentException`
 * `ready` で助言だけが残るケース
@@ -44,6 +45,7 @@ WordPress も Zoom もモデル API も使わずに、検査・助言・下書�
 * `choices` で focus が `short` などの場合、`InvalidArgumentException` (`build` / `parse`)
 * `choices` を `short` に付けた場合の `choices_unexpected`
 * `rating_bounds_invalid` の境界 (`score_min === score_max` を含む)
+* 2026-10-11追記: 同一設問に複数の不足が付くケース (安定した `deficiencies` の順序)
 
 ## 外部依存
 

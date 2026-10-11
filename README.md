@@ -4,7 +4,7 @@ Zoom Webinar 終了後アンケートの設問文書について、検査・助�
 
 ## 仕様
 
-* 索引: [docs/specs.md](./docs/specs.md)
+* 索引: [docs/specs.md](./docs/specs.md) ([docs/README.md](./docs/README.md) — 運用)
 * 統合見取り図: [docs/service_spec.md](./docs/service_spec.md)
 * 公開 PHP API: [docs/interfaces/php_api_spec.md](./docs/interfaces/php_api_spec.md)
 * 使用方法: [docs/interfaces/usage_spec.md](./docs/interfaces/usage_spec.md)

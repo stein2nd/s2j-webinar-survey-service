@@ -3,7 +3,7 @@
 本プロジェクトの仕様は、下記のドキュメントに分散して定義します。
 各ドキュメントへの導線のみを提供し、詳細な仕様は個別ファイルに委譲します。
 
-統合の見取り図は [service_spec.md](./service_spec.md) です (要約。規則の正本は `core/`)。構成は [S2J Similarity Service の docs/](https://github.com/stein2nd/s2j-similarity-service/tree/main/docs) に倣い、本ライブラリに必要な層だけを置いています。次回以降の仕様改訂案は `docs_mod/` で起草し、合意後に本ディレクトリに反映します。
+統合の見取り図は [service_spec.md](./service_spec.md) です (要約。規則の正本は `core/`)。構成は [S2J Similarity Service の docs/](https://github.com/stein2nd/s2j-similarity-service/tree/main/docs) に倣い、本ライブラリに必要な層だけを置いています。ディレクトリ運用は [README.md](./README.md) です。次回以降の仕様改訂案は `docs_mod/` で起草し、合意後に本ディレクトリに反映します。
 
 ## 読み方ガイド
 

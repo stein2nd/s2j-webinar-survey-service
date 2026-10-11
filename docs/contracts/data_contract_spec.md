@@ -45,8 +45,8 @@ PHP の公開面と Core の間で共有する Source of Truth とします。
 | questions | Question[] | 任意 (欠落・0件は不足) | 欠落可 (キーは足さない。判定は0件と同じ) | 順序あり |
 | questions[].prompt | string | 任意 (欠落・空は不足) | 欠落可 (キーは足さない。判定は空と同じ) | 回答者に見せる文 |
 | questions[].answer_kind | enum | 任意 (欠落・不正は不足) | 欠落可 (デフォルトなし。キーは足さない) | `single` / `multiple` / `short` / `long` / `rating` |
-| questions[].required | bool | 任意 | あり (欠落は `false`) | 必須か。coerce は document_spec |
-| questions[].identifies_respondent | bool | 任意 | あり (欠落は `false`) | 回答者を特定する問いが。coerce は document_spec |
+| questions[].required | bool | 任意 | あり (欠落は `false`) | 必須か。bool coerce は [../core/document_spec.md](../core/document_spec.md) |
+| questions[].identifies_respondent | bool | 任意 | あり (欠落は `false`) | 回答者を特定する問いが。bool coerce は [../core/document_spec.md](../core/document_spec.md) |
 | questions[].purpose | string | 任意 | あり (欠落は `""`) | 企画上の目的。空可 |
 | questions[].choices | string[] | 任意 | あり得る (欠落は `[]` 可。空文字要素は除去) | `single` / `multiple` で使用 |
 | questions[].score_min | int | 任意 | `rating` の場合、残る | `rating` で使用。欠けは不足 |
@@ -189,3 +189,7 @@ kind が `prompt` の場合、返却の主は新しい `prompt` です。`answer
 
 * 辞書: [data_dictionary.md](./data_dictionary.md)
 * PHP API: [../interfaces/php_api_spec.md](../interfaces/php_api_spec.md)
+
+## 改訂履歴
+
+* 2026-10-11追記: bool coerce の参照を [../core/document_spec.md](../core/document_spec.md) へのリンクに統一。

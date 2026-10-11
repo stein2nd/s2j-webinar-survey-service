@@ -39,7 +39,7 @@
 2. 各設問: `prompt_empty`、`answer_kind_invalid`、選択肢・レーティング系
 3. 不足が1件以上 → `draft`、0件 → `ready`
 
-同じ設問に複数の不足が付いてかまいません。コードの列は安定した順 (上記表の順、設問は入力順) で返します。
+同一設問に複数の不足コードを付けてもかまいません (例: `prompt_empty` と `answer_kind_invalid` の併存)。`deficiencies` の列は安定した順 (上記表のコード順、設問は入力順) で返します。
 
 ## 初版で判定しないもの
 
@@ -53,3 +53,7 @@
 
 * 文書: [document_spec.md](./document_spec.md)
 * 公開結果形: [../contracts/data_contract_spec.md](../contracts/data_contract_spec.md)
+
+## 改訂履歴
+
+* 2026-10-11追記: 同一設問に複数の不足コードを付けてよい旨と、`deficiencies` の安定順序を明確化。

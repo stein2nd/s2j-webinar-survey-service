@@ -2,6 +2,15 @@
 
 ## unreleased
 
+## 0.0.1 - 2026-10-11
+
+### Changed
+
+* docs: 横断監査を確定し [archive/mod-docs-cross-alignment](./docs/archive/mod-docs-cross-alignment/) に freeze。`docs/README.md` 追加、`docs_mod/README` は正本リンク型に整理
+* docs: Webinar 連携表記を通常「同期」の `attach_survey` に統一 (「作成直後」を廃止)。`concept` / `service_spec` / governance を関連プラグイン正本に一致
+* docs: 同一設問に複数不足コードを許容する旨と `deficiencies` の安定順序を [validation_spec](./docs/core/validation_spec.md) に明記。必須カバレッジを [testing](./docs/testing.md) に追記
+* docs: [data_contract_spec](./docs/contracts/data_contract_spec.md) の bool coerce 参照を `document_spec` にリンク。governance に `lint:docs` 対象パスと `docs_mod`→`docs` マージ規則を追記
+
 ## 0.0.1 - 2026-10-10
 
 ### Changed

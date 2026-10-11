@@ -15,6 +15,6 @@
 
 | 日付 | フォルダー | 種別 | 一言 | 備考 |
 | --- | --- | --- | --- | --- |
-| — | (まだなし) | — | 最初のイニシアチブ完了時に行を足す | |
+| 2026-10-11 | [mod-docs-cross-alignment](./mod-docs-cross-alignment/) | 改修 | docs 横断監査の確定 | 仕様ドラフトは `docs_mod/` になく `docs/` に直接反映済み |
 
 機械成果物 (カバレッジ HTML 等) はここには置きません。置き場は [../testing.md](../testing.md) の `/coverage/` です。

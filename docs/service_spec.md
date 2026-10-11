@@ -201,7 +201,7 @@ S2J Webinar が無効でも、編集と保存はできます。添付は S2J Web
 | --- | --- | --- |
 | **本ライブラリ** | Composer | 設問文書の検査、助言コード、下書きの依頼文と分解 |
 | [S2J Webinar Survey](https://github.com/stein2nd/s2j-webinar-survey) | WP プラグイン | 編集、保存、助言の表示、コネクタ経由の下書き |
-| [S2J Webinar](https://github.com/stein2nd/s2j-webinar) | WP プラグイン | `ready` の文書を、作成直後にアンケートとして付ける。設問の文面は持たない |
+| [S2J Webinar](https://github.com/stein2nd/s2j-webinar) | WP プラグイン | `ready` の文書を、通常の「同期」で `attach_survey` する材料として読む (create の必須条件にしない)。設問の文面は持たない |
 | [s2j-webinar-service](https://github.com/stein2nd/s2j-webinar-service) | Composer | 添付リクエストの組立。設問の規則は持たない |
 | [stein2nd/gatherpress](https://github.com/stein2nd/gatherpress) | WP プラグイン (フォーク) | イベントの編集画面。S2J のコードは置かない |
 | [kis-wordpress](https://github.com/stein2nd/kis-wordpress) | モノレポ | サイト専用プラグイン群。本機能は kis-core に抱え込まない |
@@ -289,3 +289,4 @@ enum 全体 (初版では後ろ3つを送らない) は、`single` / `multiple` 
 | 2026-10-07 | 確定仕様として `docs/` に移行。改訂案は `docs_mod/` で起草する、と記録 |
 | 2026-10-09 | プラグイン仕様リンクを docs/ に更新。usage の評価タイミング注記、survey の document 欠落は既存0件、と記録 |
 | 2026-10-10 | 正規化でキーを足さない欄を契約と一致。助言の多重度、trim は判定のみ、空文字 choices 除去、`score_*` は `is_int`、`max_questions` 欠落は例外、公開関数は autoload.files。status と下書き候補の用語を分離、と記録 |
+| 2026-10-11 | 横断監査の確定。Webinar 添付を通常「同期」の `attach_survey` に統一 (作成直後の表記を廃止)。`docs/README.md` と archive `mod-docs-cross-alignment` を追加、と記録 |

@@ -61,7 +61,7 @@ s2j-webinar-survey-service/
 　└─ bootstrap.php
 ```
 
-**公開面は名前空間の関数の3つだけ** です (`evaluate` / `build_draft_prompt` / `parse_draft_response`)。`composer.json` の **`autoload.files`** で載せます。正本は [php_api_spec.md](./interfaces/php_api_spec.md) です。`Core\*.php` は PSR-4 の内部実装であり、呼び出し側は直接使いません。Singleton やサービスロケータは使いません。
+**公開面は名前空間の関数の3つだけ** です (`evaluate` / `build_draft_prompt` / `parse_draft_response`)。`composer.json` の **`autoload.files`** で載せます。正本は [php_api_spec.md](./interfaces/php_api_spec.md) です。`Core\*.php` は PSR-4の内部実装であり、呼び出し側は直接使いません。Singleton やサービスロケータは使いません。
 
 ## 技術スタック
 

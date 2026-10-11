@@ -32,7 +32,10 @@
 
 * `@s2j/docs-linter` を SoT とする。
 * ローカルと CI で同じ `npm run lint:docs` を使う。
-* 対象は `README.md` と仕様 Markdown である。
+* 対象は `README.md`、`CHANGELOG.md`、`docs/**/*.md`、`docs_mod/**/*.md` である (`package.json` の `lint:docs` と同じ)。
+* S2J Webinar Survey プラグインの [documentation_governance](https://github.com/stein2nd/s2j-webinar-survey/blob/main/docs/governance/documentation_governance.md) と同様、Webinar への添付契機は通常「同期」の `attach_survey` と書き、「作成直後」とは書かない。
+
+* 2026-10-11追記: 上記 Lint 対象パスを `package.json` の `lint:docs` と一致させた。Webinar 添付契機の横断ルールを Lint 節に追記。
 
 ## 分割ルール
 
@@ -44,6 +47,19 @@
 * 確定仕様の正本は `docs/` である。
 * 大きな改訂案は `docs_mod/` で起草し、レビュー・合意のあと `docs/` に反映する。
 * プラグインや webinar-service からのリンクは、`docs/` を指すように保つ。
+
+### `docs_mod/` から `docs/` への反映 (マージ)
+
+同名の `.md` が `docs/` にすでにある場合は、下記で追記する (全面置換は、合意した大規模リライトのときだけ)。
+
+| 状況 | 操作 |
+| --- | --- |
+| 同じ見出し (`##` / `###` 等) がある | その見出しブロックの末尾に行を追加する。目印は `yyyy-mm-dd追記` とする (textlint 向けに日付と「追記」の間にスペースを入れない)。 |
+| 同じ見出しがない | ファイル末尾に追記する (必要なら `## 改訂履歴` を新設してから追記してよい)。 |
+
+反映後、起草側の仕様 `.md` は削除してよい。`docs_mod/README.md` とディレクトリ自体は残す。イニシアチブ証跡三点は [archive](../archive/README.md) に freeze する。
+
+* 2026-10-11追記: 上記マージ規則を明文化。横断 docs 整備 (`mod-docs-cross-alignment`) は `docs/` に反映済み。
 
 ## イニシアチブ証跡 (archive)
 
