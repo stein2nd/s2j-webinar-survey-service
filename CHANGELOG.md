@@ -2,10 +2,6 @@
 
 ## unreleased
 
-### Fixed
-
-* CI (PHP 8.1): `phpunit/phpunit` を ^10.5に固定し、`composer.json` の `platform.php` で lock を 8.1 向けに解決
-
 ## 0.0.1 - 2026-10-15
 
 ### Added
@@ -25,6 +21,10 @@
 * [docs/engineering/ci.md](./docs/engineering/ci.md) のローカル手順を `npm run quality` に合わせて更新
 * `composer.json` の `version` フィールドを削除 (`composer validate --strict` 向け。Packagist はタグ管理)
 * `.gitignore` に `/build/` を追加 (Composer archive 生成物)
+
+### Fixed
+
+* CI (PHP v8.1): `phpunit/phpunit` を ^10.5に固定し、`composer.json` の `platform.php` で lock を v8.1向けに解決
 
 ## 0.0.1 - 2026-10-11
 
