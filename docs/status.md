@@ -35,7 +35,7 @@
 
 ### 仕様分割 {#status-spec-docs}
 
-* [x] CI: `lint-docs` が `docs/**` 等を lint ([ci.md](./engineering/ci.md))
+* [x] CI: `docs-lint` job が `docs/**` 等を lint ([ci.md](./engineering/ci.md))
 * [x] 正本が `docs/`、起草が `docs_mod/` ([governance/documentation_governance.md](./governance/documentation_governance.md))
 
 ### Composer スケルトン {#status-composer}
@@ -106,8 +106,7 @@
 * [x] Local: `composer phpstan` がエラーなく通る (level8)
 * [x] Local: PHPUnit 全緑 (`composer test`)
 * [x] Local: PHPCS 警告0 (`composer phpcs`)
-* [x] CI: `lint-docs` ([.github/workflows/docs-lint.yml](../.github/workflows/docs-lint.yml))
-* [x] CI: [.github/workflows/php-quality.yml](../.github/workflows/php-quality.yml) — install / validate / test / lint:php
+* [x] CI: [.github/workflows/ci.yml](../.github/workflows/ci.yml) — 変更検知 + `php-quality` / `docs-lint` (条件付き) + Required `merge-gate`
 * [x] Local: `composer validate-composer` + `composer verify-dist` ([build_and_release.md](./engineering/build_and_release.md)、`npm run quality`)
 
 ### Packagist 公開 {#status-packagist}
@@ -134,4 +133,4 @@
 * Zoom 写像は、本 repo の実装対象外である。
 * 下書き分解は、番号付きリストと箇条書きを前提とする実装である。返却形式が大きく異なる場合は候補空になる (仕様どおり)。
 * **実装％** は、上記チェックリストの `[x]` / 全項の比率 (仕様分割は除く。Packagist / プラグインは表記どおり)。
-* **main** の Ruleset で `php-quality` / `lint-docs` を required にした場合、workflow の path filter により片方が Skipped になる PR ではマージできないことがある ([ci.md](./engineering/ci.md) 参照)。
+* **main** の Ruleset の Required check は **`merge-gate` のみ** とする ([ci.md](./engineering/ci.md))。

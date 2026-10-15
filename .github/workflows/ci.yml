@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  merge_group:
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      php: ${{ steps.filter.outputs.php }}
+      docs: ${{ steps.filter.outputs.docs }}
+      workflows: ${{ steps.filter.outputs.workflows }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Detect changed paths
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            php:
+              - 'src/**'
+              - 'tests/**'
+              - 'composer.json'
+              - 'composer.lock'
+              - 'phpunit.xml'
+              - 'phpstan.neon'
+              - 'phpcs.xml.dist'
+            docs:
+              - 'docs/**'
+              - '**/*.md'
+              - '.textlintrc*'
+              - 'package.json'
+              - 'package-lock.json'
+            workflows:
+              - '.github/workflows/**'
+
+  php-quality:
+    needs: changes
+    if: needs.changes.outputs.php == 'true' || needs.changes.outputs.workflows == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Run PHPUnit
+        run: composer test
+
+      - name: Run PHPStan and PHPCS
+        run: composer run lint:php
+
+  docs-lint:
+    needs: changes
+    if: needs.changes.outputs.docs == 'true' || needs.changes.outputs.workflows == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Docs Linter
+        run: npm run lint:docs
+
+  merge-gate:
+    name: merge-gate
+    needs: [changes, php-quality, docs-lint]
+    if: always() && needs.changes.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require successful or skipped quality jobs
+        run: |
+          for result in "${{ needs.php-quality.result }}" "${{ needs.docs-lint.result }}"; do
+            if [ "$result" = "failure" ] || [ "$result" = "cancelled" ]; then
+              echo "Quality job failed or was cancelled: $result"
+              exit 1
+            fi
+          done
+          echo "All applicable checks passed or were skipped."

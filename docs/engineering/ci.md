@@ -22,15 +22,28 @@
 ## 品質ゲート方針
 
 * 品質ゲートは CI で自動実行し、失敗時は merge 不可とする。
-* ジョブは、責務単位で分離する。
-* 外部プロバイダ依存のテストは、CI に含めない。
+* **1本の workflow** ([`.github/workflows/ci.yml`](../../.github/workflows/ci.yml)) が PR / `main` push / merge queue で常に起動する (workflow レベルの `path filter` は使わない)。
+* 変更検知 ([`dorny/paths-filter`](https://github.com/dorny/paths-filter)) の結果に応じ、**job レベル**で PHP 品質または docs lint を実行する。該当パスがない job は **Skipped** (Required には成功扱いで通る)。
+* **Ruleset で Required にするのは `merge-gate` のみ**。`merge-gate` は、実行された job が failure / cancelled でないことを確認する。
 
-## CI マトリックス (初版想定)
+## 変更検知 (初版)
+
+| 出力 | パス例 | 起動 job |
+| --- | --- | --- |
+| `php` | `src/**`, `tests/**`, `composer.*`, PHPUnit / PHPStan / PHPCS 設定 | `php-quality` |
+| `docs` | `docs/**`, `**/*.md`, textlint 設定, `package.json` / lock | `docs-lint` |
+| `workflows` | `.github/workflows/**` | **両方** (CI 定義変更時は回帰を避ける) |
+
+Markdown のみ / PHP のみの PR でも、該当 job だけが走り **`merge-gate` が green ならマージ可能** です。
+
+## CI ジョブ
 
 | ジョブ | 内容 |
 | --- | --- |
-| php-quality | `composer install` → PHPUnit → PHPStan → PHPCS |
-| docs-lint | `README.md` / `docs/**` (および起草中の `docs_mod/**`) 変更時に `npm run lint:docs` |
+| `changes` | `path filter` 出力 |
+| `php-quality` | `composer install` → validate → PHPUnit → PHPStan → PHPCS |
+| `docs-lint` | `npm ci` → `npm run lint:docs` |
+| `merge-gate` | 上記品質 job の結果集約 (**Required**) |
 
 WordPress 統合ジョブは、本ライブラリ単体では持ちません。プラグイン側の CI に委ねます。
 
@@ -56,5 +69,5 @@ composer run lint:php
 
 ## 完了条件
 
-* `main` の required checks に、php-quality と docs-lint が含まれること。
+* `main` の required checks に **`merge-gate`** が含まれること (`php-quality` / `docs-lint` を個別 Required にしない)。
 * 外部 API なしで、unit が緑であること。

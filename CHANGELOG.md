@@ -2,6 +2,10 @@
 
 ## unreleased
 
+### Changed
+
+* CI: `php-quality` / `docs-lint` を [.github/workflows/ci.yml](./.github/workflows/ci.yml) に統合 (変更検知 + 条件付き job + Required `merge-gate`)。Ruleset は `merge-gate` のみ必須に更新
+
 ## 0.0.1 - 2026-10-15
 
 ### Added
