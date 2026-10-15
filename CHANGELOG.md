@@ -2,9 +2,15 @@
 
 ## unreleased
 
+## 0.1.0 - 2026-10-15
+
 ### Changed
 
 * CI: `php-quality` / `docs-lint` を [.github/workflows/ci.yml](./.github/workflows/ci.yml) に統合 (変更検知 + 条件付き job + Required `merge-gate`)。Ruleset は `merge-gate` のみ必須に更新
+
+### Added
+
+* Packagist: [s2j/webinar-survey-service](https://packagist.org/packages/s2j/webinar-survey-service) を submit (2026-10-15)
 
 ## 0.0.1 - 2026-10-15
 
