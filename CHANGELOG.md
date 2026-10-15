@@ -4,7 +4,7 @@
 
 ### Changed
 
-* [docs/status.md](./docs/status.md) — Packagist § を `v0.1.0` リリース反映 (4/5)
+* [docs/status.md](./docs/status.md) — Packagist § を `v0.1.0` リリース反映 (4/5 → 5/5、auto-update 確認)
 * README — 要件 (PHP 8.1+) と Packagist インストール節を追加
 
 ## 0.1.0 - 2026-10-15
