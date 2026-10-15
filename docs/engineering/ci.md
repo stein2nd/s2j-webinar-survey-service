@@ -37,9 +37,19 @@ WordPress 統合ジョブは、本ライブラリ単体では持ちません。�
 ## ローカルコマンド (想定)
 
 ```bash
-composer test
-composer run lint:php
+npm run quality
 npm run lint:docs
+```
+
+個別に回す場合:
+
+```bash
+npm test
+npm run phpstan
+npm run phpcs
+npm run validate:composer
+npm run verify:dist
+composer run lint:php
 ```
 
 カバレッジなど PHPUnit の生成物は `/coverage/` に出す ([../testing.md](../testing.md))。CI では必要なら Actions artifact として上げる。

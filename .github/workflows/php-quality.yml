@@ -1,0 +1,46 @@
+name: PHP Quality
+
+on:
+  push:
+    paths:
+      - "composer.json"
+      - "composer.lock"
+      - "src/**"
+      - "tests/**"
+      - "phpunit.xml"
+      - "phpstan.neon"
+      - "phpcs.xml.dist"
+  pull_request:
+    paths:
+      - "composer.json"
+      - "composer.lock"
+      - "src/**"
+      - "tests/**"
+      - "phpunit.xml"
+      - "phpstan.neon"
+      - "phpcs.xml.dist"
+
+jobs:
+  php-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Run PHPUnit
+        run: composer test
+
+      - name: Run PHPStan and PHPCS
+        run: composer run lint:php

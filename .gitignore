@@ -1,4 +1,5 @@
 # Composer
+/build/
 /vendor/
 /wordpress/
 composer.phar

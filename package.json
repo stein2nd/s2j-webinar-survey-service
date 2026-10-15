@@ -26,7 +26,13 @@
         "verify:codegen": "./scripts/generate/all.zsh && git diff --exit-code",
         "build:ts-client": "npm run build -w @s2j/similarity-client",
         "test:ts-client": "npm test -w @s2j/similarity-client",
-        "lint:docs": "s2j-docs-linter ./README.md ./CHANGELOG.md ./docs/**/*.md ./docs_mod/**/*.md"
+        "lint:docs": "s2j-docs-linter ./README.md ./CHANGELOG.md ./docs/**/*.md ./docs_mod/**/*.md",
+        "test": "composer test",
+        "phpstan": "composer phpstan",
+        "phpcs": "composer phpcs",
+        "validate:composer": "composer validate-composer",
+        "verify:dist": "composer verify-dist",
+        "quality": "zsh scripts/verify/all.zsh"
     },
     "allowScripts": {
         "@s2j/docs-linter": true,

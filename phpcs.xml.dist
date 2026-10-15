@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ruleset name="S2J Webinar Survey Service">
+    <description>PHP_CodeSniffer rules for s2j/webinar-survey-service.</description>
+
+    <file>src</file>
+    <file>tests</file>
+
+    <rule ref="PSR12"/>
+
+    <config name="testVersion" value="8.1-"/>
+</ruleset>

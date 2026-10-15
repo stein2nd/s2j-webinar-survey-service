@@ -7,12 +7,20 @@
 ### Added
 
 * Composer パッケージ定義 (`s2j/webinar-survey-service`、PHP >=8.1、dev: PHPUnit / PHPStan / PHPCS、`lint:php` スクリプト)
-* PSR-4 `S2J\WebinarSurveyService\` → `src/` と公開 API 用 `src/functions.php` (`autoload.files`。3関数は未実装)
+* 公開 API の3関数と Core (正規化・検査・助言・下書き) の初版実装
+* PHPUnit: 21件、`phpunit.xml` / `phpstan.neon` / `phpcs.xml.dist`
+* GitHub Actions ワークフロー `php-quality` (PHPUnit / PHPStan / PHPCS)
+* 配布物検証 `composer verify-dist` と `scripts/verify-composer-dist.sh`
+* ローカル一括検証 `npm run quality` (`scripts/verify/all.zsh`。Webinar Service と同型の `test` / `phpstan` / `phpcs` / `validate:composer` / `verify:dist` を `package.json` に追加)
 
 ### Changed
 
-* ドキュメント lint の `@s2j/docs-linter` を ^1.0.29 に更新
-* `.textlintrc.json` の allowlist に Markdown アンカー (`#status-...`) を追加
+* ドキュメント lint の `@s2j/docs-linter` を ^1.0.29に更新
+* textlint の許可パターンに `#status-*` アンカー ID を追加
+* [docs/status.md](./docs/status.md) の実装状況を更新
+* [docs/engineering/ci.md](./docs/engineering/ci.md) のローカル手順を `npm run quality` に合わせて更新
+* `composer.json` の `version` フィールドを削除 (`composer validate --strict` 向け。Packagist はタグ管理)
+* `.gitignore` に `/build/` を追加 (Composer archive 生成物)
 
 ## 0.0.1 - 2026-10-11
 

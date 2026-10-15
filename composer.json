@@ -1,7 +1,6 @@
 {
     "name": "s2j/webinar-survey-service",
     "description": "A pure PHP library for building a Webinar Survey (WP-Independent)",
-    "version": "0.0.1",
     "type": "library",
     "license": "GPL-3.0-or-later",
     "authors": [
@@ -78,7 +77,7 @@
         ]
     },
     "scripts": {
-        "test": "@php vendor/bin/phpunit",
+        "test": "@php vendor/bin/phpunit --no-coverage",
         "phpstan": "@php vendor/bin/phpstan analyse --memory-limit=512M",
         "phpcs": "@php vendor/bin/phpcs",
         "phpcbf": "@php vendor/bin/phpcbf",
@@ -86,7 +85,8 @@
             "@phpstan",
             "@phpcs"
         ],
-        "validate-composer": "composer validate --strict"
+        "validate-composer": "composer validate --strict",
+        "verify-dist": "bash scripts/verify-composer-dist.sh"
     },
     "config": {
         "sort-packages": true
