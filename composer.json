@@ -23,7 +23,7 @@
         "php": ">=8.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^13.1",
+        "phpunit/phpunit": "^10.5",
         "phpstan/phpstan": "^2.1",
         "squizlabs/php_codesniffer": "^4.0"
     },
@@ -89,6 +89,9 @@
         "verify-dist": "bash scripts/verify-composer-dist.sh"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "8.1.34"
+        }
     }
 }

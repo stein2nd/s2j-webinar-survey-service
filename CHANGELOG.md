@@ -2,6 +2,10 @@
 
 ## unreleased
 
+### Fixed
+
+* CI (PHP 8.1): `phpunit/phpunit` を ^10.5に固定し、`composer.json` の `platform.php` で lock を 8.1 向けに解決
+
 ## 0.0.1 - 2026-10-15
 
 ### Added
