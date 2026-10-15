@@ -2,6 +2,18 @@
 
 Zoom Webinar 終了後アンケートの設問文書について、検査・助言・下書き分解を行う WordPress 非依存の Composer ライブラリです。
 
+## 要件
+
+* **PHP 8.1以上**
+
+## インストール
+
+Packagist のパッケージ名だけを require します (`repositories` に VCS / パスは書きません)。
+
+```bash
+composer require s2j/webinar-survey-service
+```
+
 ## 仕様
 
 * 索引: [docs/specs.md](./docs/specs.md) ([docs/README.md](./docs/README.md) — 運用)
