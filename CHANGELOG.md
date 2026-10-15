@@ -2,6 +2,18 @@
 
 ## unreleased
 
+## 0.0.1 - 2026-10-15
+
+### Added
+
+* Composer パッケージ定義 (`s2j/webinar-survey-service`、PHP >=8.1、dev: PHPUnit / PHPStan / PHPCS、`lint:php` スクリプト)
+* PSR-4 `S2J\WebinarSurveyService\` → `src/` と公開 API 用 `src/functions.php` (`autoload.files`。3関数は未実装)
+
+### Changed
+
+* ドキュメント lint の `@s2j/docs-linter` を ^1.0.29 に更新
+* `.textlintrc.json` の allowlist に Markdown アンカー (`#status-...`) を追加
+
 ## 0.0.1 - 2026-10-11
 
 ### Changed
