@@ -2,10 +2,14 @@
 
 ## unreleased
 
+## 0.1.1 - 2026-10-16
+
 ### Changed
 
-* [docs/status.md](./docs/status.md) — Packagist § を `v0.1.0` リリース反映 (4/5)
-* README — 要件 (PHP 8.1+) と Packagist インストール節を追加
+* [docs/status.md](./docs/status.md) —「100% 完了条件チェックリスト」(Webinar Service 形式)、Packagist §5/5、`merge-gate` 方針
+* README — 要件 (PHP v8.1+) と Packagist `composer require` 節
+* `package.json` — `lint:php`、ローカル/CI 向け `test:unit:php:local` と `pretest:*` (実行前 `composer install`)
+* dev: `package-lock.json` — `@s2j/docs-linter` 依存の更新 (`textlint-rule-prh` v6.1.1等)
 
 ## 0.1.0 - 2026-10-15
 
@@ -16,6 +20,7 @@
 ### Added
 
 * Packagist: [s2j/webinar-survey-service](https://packagist.org/packages/s2j/webinar-survey-service) を submit (2026-10-15)
+* GitHub [Release v0.1.0](https://github.com/stein2nd/s2j-webinar-survey-service/releases/tag/v0.1.0)、タグ `v0.1.0`
 
 ## 0.0.1 - 2026-10-15
 

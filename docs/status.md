@@ -28,7 +28,7 @@
 | 下書き依頼文 | 実装済み | 100 | [§ 下書き](#status-draft) (10/10) |
 | 下書き分解 | 実装済み | 100 | [§ 下書き](#status-draft) (同上) |
 | PHPUnit / PHPStan / PHPCS | 実装済み | 100 | [§ 品質ゲート](#status-quality) (7/7) |
-| Packagist 公開 | 実装中 | 80 | [§ Packagist](#status-packagist) (4/5) |
+| Packagist 公開 | 実装済み | 100 | [§ Packagist](#status-packagist) (5/5) |
 | プラグインからの require | 未実装 | 0 | [§ プラグイン](#status-plugin) (0/3) |
 
 ## 100% 完了条件チェックリスト
@@ -113,9 +113,8 @@
 
 正本: [build_and_release.md](./engineering/build_and_release.md)
 
-* [ ] CI: タグ `v*.*.*` 用 release workflow (S2J Webinar Service の [release.yml](https://github.com/stein2nd/s2j-webinar-service/blob/main/.github/workflows/release.yml) 相当)
 * [x] Packagist: [s2j/webinar-survey-service](https://packagist.org/packages/s2j/webinar-survey-service) を submit (2026-10-15)
-* [ ] Packagist: **auto-update** 表示を確認 (`This package is auto-updated.`。[About — GitHub Hook](https://packagist.org/about#how-to-update-packages): GitHub ログイン + App 権限、または GitHub repo の Webhook 手動設定)
+* [x] Packagist: **auto-update** — `This package is auto-updated.` を確認 (2026-10-15)
 * [x] SemVer: CHANGELOG `0.1.0`、タグ [`v0.1.0`](https://github.com/stein2nd/s2j-webinar-survey-service/releases/tag/v0.1.0)、Packagist [`v0.1.0`](https://packagist.org/packages/s2j/webinar-survey-service#v0.1.0)（`composer require s2j/webinar-survey-service:^0.1.0` 確認済）
 * [x] `composer validate-composer` / `composer verify-dist` (.gitattributes)
 * [x] README — `composer require` / PHP 8.1+（[README.md](../../README.md)）
@@ -135,3 +134,4 @@
 * 下書き分解は、番号付きリストと箇条書きを前提とする実装である。返却形式が大きく異なる場合は候補空になる (仕様どおり)。
 * **実装％** は、上記チェックリストの `[x]` / 全項の比率 (仕様分割は除く。Packagist / プラグインは表記どおり)。
 * **main** の Ruleset の Required check は **`merge-gate` のみ** とする ([ci.md](./engineering/ci.md))。
+* Packagist § の **5/5** は submit / auto-update / SemVer+タグ / dist 検証 / README。**任意:** タグ用 [release.yml](https://github.com/stein2nd/s2j-webinar-service/blob/main/.github/workflows/release.yml) 相当の CI は未導入。
