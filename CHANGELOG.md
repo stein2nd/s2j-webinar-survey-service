@@ -2,6 +2,12 @@
 
 ## unreleased
 
+## 0.1.2 - 2026-10-19
+
+### Changed
+
+* [docs/status.md](./docs/status.md) — § [プラグインからの require](./docs/status.md#status-plugin) **3/3** (S2J Webinar Survey 連携: Packagist require、`evaluate`、draft REST; プラグイン PHPUnit と smoke へのリンク)
+
 ## 0.1.1 - 2026-10-16
 
 ### Changed
