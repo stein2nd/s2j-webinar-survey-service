@@ -4,7 +4,7 @@
 完了したイニシアチブの凍結状況は [archive/README.md](./archive/README.md) です (直近: [mod-docs-cross-alignment](./archive/mod-docs-cross-alignment/))。進行中の証跡三点は `docs_mod/` に置きます。
 索引は [specs.md](./specs.md) です。規則・型の Source of Truth は [core/](./core/document_spec.md) と [contracts/](./contracts/data_contract_spec.md) です ([governance/documentation_governance.md](./governance/documentation_governance.md) と同じ)。
 
-最終更新: 2026-10-15
+最終更新: 2026-10-19
 
 ## 仕様書 (参照元)
 
@@ -29,7 +29,7 @@
 | 下書き分解 | 実装済み | 100 | [§ 下書き](#status-draft) (同上) |
 | PHPUnit / PHPStan / PHPCS | 実装済み | 100 | [§ 品質ゲート](#status-quality) (7/7) |
 | Packagist 公開 | 実装済み | 100 | [§ Packagist](#status-packagist) (5/5) |
-| プラグインからの require | 未実装 | 0 | [§ プラグイン](#status-plugin) (0/3) |
+| プラグインからの require | 実装済み | 100 | [§ プラグイン](#status-plugin) (3/3) |
 
 ## 100% 完了条件チェックリスト
 
@@ -55,7 +55,7 @@
 
 * [x] Test: `EvaluateTest::testNormalizationDefaultsAndBoolCoercion` — 欠落 scalar のデフォルト、空 `choices`、`"false"` 文字列 → false
 * [x] Test: `EvaluateTest::testBoolCoercionTrueFromStringOne` — `"1"` → true (`(bool)` キャストではない)
-* [x] Test: `EvaluateTest::testMissingKeysAreNotAdded` — 入力に無いキーを出力に足さない
+* [x] Test: `EvaluateTest::testMissingKeysAreNotAdded` — 入力にないキーを出力に足さない
 * [x] Test: `EvaluateTest::testEmptyChoiceElementsAreRemovedForValidation` — 空要素 choice を除去して検査
 * [x] Test: `EvaluateTest::testRatingScoreFieldsStrippedForNonRating` — `rating` 以外の `score_*` 除去
 
@@ -71,7 +71,7 @@
 * [x] Test: `EvaluateTest::testAllDeficiencyCodes` — `choices_unexpected`
 * [x] Test: `EvaluateTest::testAllDeficiencyCodes` — `rating_bounds_invalid` (`score_min === score_max` 含む)
 * [x] Test: `EvaluateTest::testMultipleDeficienciesOnSameQuestionInStableOrder` — 同一設問・安定順
-* [x] Test: `EvaluateTest::testRatingStringScoreIsInvalid` — 非 `is_int` の score → `rating_bounds_invalid` (0/10 で埋めない)
+* [x] Test: `EvaluateTest::testRatingStringScoreIsInvalid` — 非 `is_int` の score → `rating_bounds_invalid` (0/10で埋めない)
 
 ### 助言コード {#status-advice}
 
@@ -87,7 +87,7 @@
 
 正本: [draft_spec.md](./core/draft_spec.md)
 
-* [x] Test: `DraftTest::testSurveyRequestedCountAndZeroPrompt` — `survey` 件数式・満杯時 `requested_count` 0 と空 `prompt_text`
+* [x] Test: `DraftTest::testSurveyRequestedCountAndZeroPrompt` — `survey` 件数式・満杯時 `requested_count` 0と空 `prompt_text`
 * [x] Test: `DraftTest::testSurveyMissingDocumentCountsAsZeroExisting` — 既存0件としての requested
 * [x] Test: `DraftTest::testSurveyMaxQuestionsMissingThrows` — kind `survey` の context 必須
 * [x] Test: `DraftTest::testPromptAndChoicesAlwaysRequestOne` — kind `prompt` / `choices` は常に1
@@ -95,14 +95,14 @@
 * [x] Test: `DraftTest::testParseSurveyTruncatesAndParsesRatingDefaults` — 切り詰め、番号付きリスト / 箇条書き、`rating` 0/10
 * [x] Test: `DraftTest::testParsePromptInheritsFocusFields` — kind `prompt` が focus から `answer_kind` 等を引き継ぐ
 * [x] Test: `DraftTest::testParseChoicesFragment` — kind `choices` の候補のみ返す
-* [x] Test: `DraftTest::testParseReturnsEmptyWhenRequestedCountBelowOne` — `requested_count` 0 で空配列
+* [x] Test: `DraftTest::testParseReturnsEmptyWhenRequestedCountBelowOne` — `requested_count` 0で空配列
 * [x] Test: `DraftTest::testUnparseableSurveyReturnsEmptyCandidates` — 分解不能で空 (仕様どおり)
 
 ### PHPUnit / PHPStan / PHPCS {#status-quality}
 
 正本: [testing.md](./testing.md) / [ci.md](./engineering/ci.md)
 
-* [x] Test: [testing.md](./testing.md) 必須カバレッジ — 上記 § の Unit 群 (21 tests)
+* [x] Test: [testing.md](./testing.md) 必須カバレッジ — 上記 § の Unit 群 (`21` tests)
 * [x] Local: `composer phpstan` がエラーなく通る (level8)
 * [x] Local: PHPUnit 全緑 (`composer test`)
 * [x] Local: PHPCS 警告0 (`composer phpcs`)
@@ -115,17 +115,19 @@
 
 * [x] Packagist: [s2j/webinar-survey-service](https://packagist.org/packages/s2j/webinar-survey-service) を submit (2026-10-15)
 * [x] Packagist: **auto-update** — `This package is auto-updated.` を確認 (2026-10-15)
-* [x] SemVer: CHANGELOG `0.1.0`、タグ [`v0.1.0`](https://github.com/stein2nd/s2j-webinar-survey-service/releases/tag/v0.1.0)、Packagist [`v0.1.0`](https://packagist.org/packages/s2j/webinar-survey-service#v0.1.0)（`composer require s2j/webinar-survey-service:^0.1.0` 確認済）
+* [x] SemVer: CHANGELOG `0.1.0`、タグ [`v0.1.0`](https://github.com/stein2nd/s2j-webinar-survey-service/releases/tag/v0.1.0)、Packagist [`v0.1.0`](https://packagist.org/packages/s2j/webinar-survey-service#v0.1.0) (`composer require s2j/webinar-survey-service:^0.1.0` 確認済)
 * [x] `composer validate-composer` / `composer verify-dist` (.gitattributes)
-* [x] README — `composer require` / PHP 8.1+（[README.md](../../README.md)）
+* [x] README — `composer require` / PHP v8.1+ ([README.md](../../README.md))
 
 ### プラグインからの require {#status-plugin}
 
-正本: S2J Webinar Survey 側 (本 repo 外)。プラグインの進捗はそちらが正本。
+正本: [S2J Webinar Survey `docs/status.md`](https://github.com/stein2nd/s2j-webinar-survey/blob/main/docs/status.md) (本 repo 外)。プラグイン側の進捗と手動 QA はそちらが正本。
 
-* [ ] S2J Webinar Survey: `composer.json` — `s2j/webinar-survey-service` 制約
-* [ ] プラグイン: 保存前 `evaluate` + 不足/助言の表示
-* [ ] プラグイン: `build_draft_prompt` / `parse_draft_response` による下書き UI
+* [x] S2J Webinar Survey: `composer.json` — `s2j/webinar-survey-service`: `^0.1` ([Packagist](https://packagist.org/packages/s2j/webinar-survey-service))、`vendor/` 同梱配布
+* [x] プラグイン: 明示保存時 `evaluate` (`save_post` + [`ServiceBridge`](https://github.com/stein2nd/s2j-webinar-survey/blob/main/includes/ServiceBridge.php))、表示専用 `POST …/v1/evaluate`、Advice タブ i18n — 検証: プラグイン [`ServiceBridgeTest`](https://github.com/stein2nd/s2j-webinar-survey/blob/main/tests/Unit/ServiceBridgeTest.php)、[`EvaluateControllerIntegrationTest`](https://github.com/stein2nd/s2j-webinar-survey/blob/main/tests/Integration/EvaluateControllerIntegrationTest.php)、段階1 [`smoke-local.sh`](https://github.com/stein2nd/s2j-webinar-survey/blob/main/tests/smoke-local.sh)
+* [x] プラグイン: `POST …/v1/draft` — `build_draft_prompt` / `parse_draft_response` + Gutenberg 採用 UI — 検証: [`DraftControllerMockIntegrationTest`](https://github.com/stein2nd/s2j-webinar-survey/blob/main/tests/Integration/DraftControllerMockIntegrationTest.php) (filter `s2j_webinar_survey_draft_ai_text`)、[test-results.md §2026-10-19](https://github.com/stein2nd/s2j-webinar-survey/blob/main/docs/test-results.md#最新結果)
+
+**S2J Webinar Survey 側 (2026-10-19):** プラグイン検証可能項は Local **100%** ([status.md §100%](https://github.com/stein2nd/s2j-webinar-survey/blob/main/docs/status.md#100-完了条件チェックリスト))。`npm run test:quality:local` (unit **6** + integration **9** + `lint:php`)。Survey `ready` → Webinar `attach_survey` / Zoom 添付はプラグイン [§外部結合ゲート E3–E4](https://github.com/stein2nd/s2j-webinar-survey/blob/main/docs/status.md#status-external) (本 Service § の分母外)。
 
 ## 補足
 
@@ -135,3 +137,4 @@
 * **実装％** は、上記チェックリストの `[x]` / 全項の比率 (仕様分割は除く。Packagist / プラグインは表記どおり)。
 * **main** の Ruleset の Required check は **`merge-gate` のみ** とする ([ci.md](./engineering/ci.md))。
 * Packagist § の **5/5** は submit / auto-update / SemVer+タグ / dist 検証 / README。**任意:** タグ用 [release.yml](https://github.com/stein2nd/s2j-webinar-service/blob/main/.github/workflows/release.yml) 相当の CI は未導入。
+* **プラグイン** の Webinar / Zoom 実機は S2J Webinar Survey の [外部結合ゲート](https://github.com/stein2nd/s2j-webinar-survey/blob/main/docs/status.md#status-external) に分離する。
