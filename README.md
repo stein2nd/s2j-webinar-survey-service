@@ -4,7 +4,7 @@ Zoom Webinar 終了後アンケートの設問文書について、検査・助�
 
 ## 要件
 
-* **PHP 8.1以上**
+* **PHP 8.3以上** (WordPress [推奨環境](https://ja.wordpress.org/about/requirements/) に合わせ、`s2j/webinar-service` と同様)
 
 ## インストール
 

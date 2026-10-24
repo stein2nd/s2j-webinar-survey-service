@@ -27,7 +27,7 @@ Similarity Service の SDK 仕様に相当する、本ライブラリ向けの�
 | --- | --- |
 | Composer 名 | `s2j/webinar-survey-service` |
 | 名前空間 | `S2J\WebinarSurveyService\` |
-| PHP | `>=8.1` |
+| PHP | `>=8.3` |
 
 ## 公開 API (初版)
 

@@ -1,6 +1,6 @@
 {
     "name": "s2j-webinar-survey-service",
-    "version": "0.1.2",
+    "version": "0.2.0",
     "description": "A pure PHP library for building a Webinar Survey (WP-Independent)",
     "type": "module",
     "author": "Koutarou ISHIKAWA",
@@ -19,7 +19,7 @@
     "files": [],
     "main": "",
     "devDependencies": {
-        "@s2j/docs-linter": "^1.0.29"
+        "@s2j/docs-linter": "^1.0.30"
     },
     "scripts": {
         "lint:docs": "s2j-docs-linter ./README.md ./CHANGELOG.md ./docs/**/*.md ./docs_mod/**/*.md",
