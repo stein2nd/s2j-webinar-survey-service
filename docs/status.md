@@ -117,7 +117,7 @@
 * [x] Packagist: **auto-update** — `This package is auto-updated.` を確認 (2026-10-15)
 * [x] SemVer: CHANGELOG `0.1.0`、タグ [`v0.1.0`](https://github.com/stein2nd/s2j-webinar-survey-service/releases/tag/v0.1.0)、Packagist [`v0.1.0`](https://packagist.org/packages/s2j/webinar-survey-service#v0.1.0) (`composer require s2j/webinar-survey-service:^0.1.0` 確認済)
 * [x] `composer validate-composer` / `composer verify-dist` (.gitattributes)
-* [x] README — `composer require` / PHP v8.1+ ([README.md](../../README.md))
+* [x] README — `composer require` / PHP v8.3+ ([README.md](../../README.md))
 
 ### プラグインからの require {#status-plugin}
 

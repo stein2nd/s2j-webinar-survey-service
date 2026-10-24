@@ -2,6 +2,16 @@
 
 ## unreleased
 
+## 0.2.0 - 2026-10-24
+
+### Changed
+
+* `composer.json` / `composer.lock` — PHP 下限 `>=8.3`、`config.platform.php` `8.3.0` (WordPress [推奨環境](https://ja.wordpress.org/about/requirements/) と `s2j/webinar-service` に合わせる。**PHP v8.1のみの環境では `composer update` 不可**)
+* [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) — `php-quality` の実行 PHP を v8.3に変更
+* [`phpcs.xml.dist`](./phpcs.xml.dist) — 互換チェック `testVersion` を `8.3-` に変更
+* [README.md](./README.md)、[docs/overview.md](./docs/overview.md)、[docs/architecture.md](./docs/architecture.md)、[docs/interfaces/php_api_spec.md](./docs/interfaces/php_api_spec.md)、[docs/status.md](./docs/status.md)、[docs/engineering/ci.md](./docs/engineering/ci.md) — 要件、CI 表記を v8.3+ に更新
+* dev: `package.json` / `package-lock.json` — `@s2j/docs-linter` ^1.0.30
+
 ## 0.1.2 - 2026-10-19
 
 ### Changed

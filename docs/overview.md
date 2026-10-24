@@ -37,7 +37,7 @@
 
 ### 利用環境 (想定)
 
-* PHP v8.1以上 (Composer)
+* PHP v8.3以上 (Composer)
 * 呼び出し側は、主に WordPress プラグイン (本ライブラリは WP に依存しない)
 
 ## Composer パッケージの責務と非対応スコープ

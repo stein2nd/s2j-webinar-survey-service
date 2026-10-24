@@ -41,7 +41,7 @@ Markdown のみ / PHP のみの PR でも、該当 job だけが走り **`merge-
 | ジョブ | 内容 |
 | --- | --- |
 | `changes` | `path filter` 出力 |
-| `php-quality` | `composer install` → validate → PHPUnit → PHPStan → PHPCS |
+| `php-quality` | PHP **8.3** — `composer install` → validate → PHPUnit → PHPStan → PHPCS |
 | `docs-lint` | `npm ci` → `npm run lint:docs` |
 | `merge-gate` | 上記品質 job の結果集約 (**Required**) |
 

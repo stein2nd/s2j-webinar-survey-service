@@ -7,5 +7,5 @@
 
     <rule ref="PSR12"/>
 
-    <config name="testVersion" value="8.1-"/>
+    <config name="testVersion" value="8.3-"/>
 </ruleset>
