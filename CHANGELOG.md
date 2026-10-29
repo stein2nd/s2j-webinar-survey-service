@@ -2,6 +2,13 @@
 
 ## unreleased
 
+## 0.2.1 - 2026-10-29
+
+### Changed
+
+* dev: `package.json` / `package-lock.json` — `@s2j/docs-linter` ^1.0.31
+* dev: `composer.lock` — `phpstan/phpstan` v2.3.4 (lock のみ、`composer.json` の `^2.1` 範囲内)
+
 ## 0.2.0 - 2026-10-24
 
 ### Changed
