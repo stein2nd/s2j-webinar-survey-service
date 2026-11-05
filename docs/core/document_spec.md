@@ -18,7 +18,7 @@
 ## 非責務
 
 * 不足・助言コードの列挙本体 ([validation_spec.md](./validation_spec.md)、[advice_spec.md](./advice_spec.md))
-* Zoom フィールド名への写像
+* Zoom フィールド名へのマッピング
 * イベントメタのキー名 (プラグイン仕様)
 
 ## 文書の形

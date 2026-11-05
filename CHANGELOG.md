@@ -2,6 +2,15 @@
 
 ## unreleased
 
+## 0.2.2 - 2026-11-05
+
+### Changed
+
+* docs — Zoom / webinar-service 境界の用語を「写像」から **マッピング** に統一 ([docs/architecture.md](./docs/architecture.md)、[docs/concept.md](./docs/concept.md)、[docs/overview.md](./docs/overview.md)、[docs/principles.md](./docs/principles.md)、[docs/service_spec.md](./docs/service_spec.md)、[docs/specs.md](./docs/specs.md)、[docs/status.md](./docs/status.md)、[docs/core/document_spec.md](./docs/core/document_spec.md)、[docs/core/draft_spec.md](./docs/core/draft_spec.md))
+* CHANGELOG — 過去節の同語句をマッピングにそろえ (docs lint 整合)
+* dev: `package.json` / `package-lock.json` — `@s2j/docs-linter` ^1.0.32
+* dev: `composer.lock` — `phpstan/phpstan` v2.3.5 (lock のみ、`composer.json` の `^2.1` 範囲内)
+
 ## 0.2.1 - 2026-10-29
 
 ### Changed
@@ -117,7 +126,7 @@
 
 ### Fixed
 
-* `docs_mod` 間の齟齬: `ready` 文書は S2J Webinar が読む (写像は webinar-service)、初版到達点に下書きを含める、`max_questions` が1未満は `InvalidArgumentException`
+* `docs_mod` 間の齟齬: `ready` 文書は S2J Webinar が読む (マッピングは webinar-service)、初版到達点に下書きを含める、`max_questions` が1未満は `InvalidArgumentException`
 * 公開関数名を `build_draft_prompt` / `parse_draft_response` に統一、`choices_unexpected` を「空でない選択肢」、下書き API の `max_questions` 未満も例外、とそろえる
 * 下書き候補の形を追記 (`rating` / `long` / `short` を含む Question 形。Zoom キーは載せない)。正本は `docs/core/draft_spec.md`
 * あいまいさの締め: `score_*` は evaluate 非埋め / 下書き分解のみ目安、`prompt` は focus 引き継ぎ、`too_many` 文言、規則正本は `core/`、公開面は関数3つ
@@ -131,8 +140,8 @@
 * 誘導と二重の問いは初版では判定しない、と記録 (周知はプラグインのパネル指針)
 * 未決事項から、設問総数の上限と誘導・二重問いの判定を外す
 * 答え方を `closed` / `open` から `single` / `multiple` / `short` / `long` / `rating` の5つに変更 (`rating` 用の境界・ラベル欄を追加)
-* Zoom への写像を本ライブラリの外 (S2J Webinar Service) に確定し、初版5種の `type` 対応を記録
-* 画像・スキップ・マッチング・ランク・空欄記入は初版以降の検討とし、未決事項の写像項目を外す
+* Zoom へのマッピングを本ライブラリの外 (S2J Webinar Service) に確定し、初版5種の `type` 対応を記録
+* 画像・スキップ・マッチング・ランク・空欄記入は初版以降の検討とし、未決事項のマッピング項目を外す
 * 確定した仕様キットを `docs_mod/` から `docs/` に移行。`docs_mod/` は以降の改訂案の起草用として残す
 * README にライブラリ概要と `docs/` / `docs_mod/` / archive への導線を追加
 * `lint:docs` の対象に `docs_mod/**/*.md` を追加

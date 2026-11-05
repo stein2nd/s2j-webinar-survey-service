@@ -102,7 +102,7 @@ Similarity Service にあるが、初版の本ライブラリでは持たない�
 | SRE (観測・スケール) | なし。インプロセスの純関数 |
 | 認証・課金ガバナンス | なし。秘密情報を扱わない |
 
-Zoom へのアンケート添付と設問型の写像は、[S2J Webinar Service](https://github.com/stein2nd/s2j-webinar-service) の仕事です。本ドキュメント群には写像の実装仕様を置きません。境界の要約だけ [service_spec.md](./service_spec.md) にあります。
+Zoom へのアンケート添付と設問型のマッピングは、[S2J Webinar Service](https://github.com/stein2nd/s2j-webinar-service) の仕事です。本ドキュメント群にはマッピングの実装仕様を置きません。境界の要約だけ [service_spec.md](./service_spec.md) にあります。
 
 ## 依存関係ルール
 

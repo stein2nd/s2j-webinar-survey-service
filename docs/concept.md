@@ -12,7 +12,7 @@
 * 運営者が、イベント編集画面でその回のアンケート設問を書く。
 * 設問総数の上限は、サイト設定としてプラグインが渡し、ライブラリには埋め込まない。
 * 下書きを頼む場合は、プラグインがサイトのコネクタに1回送り、返ってきた文だけを本ライブラリが分ける。
-* Zoom への添付は、S2J Webinar が `ready` の文書だけを読む。写像と HTTP 材料は S2J Webinar Service である。
+* Zoom への添付は、S2J Webinar が `ready` の文書だけを読む。マッピングと HTTP 材料は S2J Webinar Service である。
 
 ## 解決する課題
 
@@ -64,7 +64,7 @@ flowchart TD
 | Contracts | 文書と結果の形 |
 | Interfaces | 公開関数。薄い入口 |
 | プラグイン | 画面、保存、表示文、コネクタ、上限のサイト設定 |
-| Webinar Service | Zoom 添付の写像と HTTP 材料 |
+| Webinar Service | Zoom 添付のマッピングと HTTP 材料 |
 
 ## 外部モデルの取り扱い
 

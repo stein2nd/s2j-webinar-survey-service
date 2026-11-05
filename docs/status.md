@@ -132,7 +132,7 @@
 ## 補足
 
 * 初版に OpenAPI、REST Adapter、TypeScript SDK は、含めない。
-* Zoom 写像は、本 repo の実装対象外である。
+* Zoom マッピングは、本 repo の実装対象外である。
 * 下書き分解は、番号付きリストと箇条書きを前提とする実装である。返却形式が大きく異なる場合は候補空になる (仕様どおり)。
 * **実装％** は、上記チェックリストの `[x]` / 全項の比率 (仕様分割は除く。Packagist / プラグインは表記どおり)。
 * **main** の Ruleset の Required check は **`merge-gate` のみ** とする ([ci.md](./engineering/ci.md))。

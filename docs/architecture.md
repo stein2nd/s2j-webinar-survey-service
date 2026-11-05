@@ -31,7 +31,7 @@ flowchart TD
   I --> D["Contracts"]
   C --> D
   V["S2J Webinar (プラグイン)"] -.->|"ready 文書を読む"| P
-  W["S2J Webinar Service"] -.->|"写像と HTTP 材料"| V
+  W["S2J Webinar Service"] -.->|"マッピングと HTTP 材料"| V
 ```
 
 ## フォルダー構成 (想定)
@@ -80,7 +80,7 @@ s2j-webinar-survey-service/
 | --- | --- |
 | 本ライブラリ | 計算 |
 | S2J Webinar Survey | 編集、保存、助言のメッセージ表示 (i18n)、コネクタ、上限のサイト設定 |
-| S2J Webinar / webinar-service | Zoom 添付 HTTP と設問型写像 |
+| S2J Webinar / webinar-service | Zoom 添付 HTTP と設問型マッピング |
 
 ## 関連ドキュメント
 

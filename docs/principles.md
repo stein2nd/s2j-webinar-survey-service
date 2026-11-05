@@ -51,7 +51,7 @@ flowchart TD
 ### 6. Zoom を知らない
 
 * 文書の答え方は、`single` / `multiple` / `short` / `long` / `rating` である。
-* Zoom の `type` 文字列とリクエストキーは、webinar-service の写像である。
+* Zoom の `type` 文字列とリクエストキーは、webinar-service のマッピングである。
 
 ### 7. 下書き候補は文書に書かない
 

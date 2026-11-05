@@ -89,7 +89,7 @@ questions                  順序あり。0件は不足
 status                     draft | ready
 ```
 
-答え方は5つです。Zoom の画面の呼び名との対応は、写像の表に任せます。本ライブラリは Zoom の型名を持ちません。
+答え方は5つです。Zoom の画面の呼び名との対応は、マッピングの表に任せます。本ライブラリは Zoom の型名を持ちません。
 
 | answer_kind | 意味 | パネルの呼び名 (目安) |
 | --- | --- | --- |
@@ -213,13 +213,13 @@ KIS のサイトは、このプラグインのユーザーの一つです。
 1. 仕様を `docs/` に確定する (完了)。
 2. 本 repo でスケルトンと純関数の初版 (PHPUnit、WordPress なし、HTTP なし)。検査、助言、下書きの依頼文と分解を含む。
 3. プラグインが Composer で require し、イベント編集画面の保存と助言表示、ボタンによる下書きをつなぐ。
-4. S2J Webinar Service が `ready` の文書を `PATCH /webinars/{webinarId}/survey` の材料に写す。写像は本ライブラリに入れない。
+4. S2J Webinar Service が `ready` の文書を `PATCH /webinars/{webinarId}/survey` の材料に写す。マッピングは本ライブラリに入れない。
 
-## Zoom への写像 (本ライブラリの外)
+## Zoom へのマッピング (本ライブラリの外)
 
-写像は [S2J Webinar Service](https://github.com/stein2nd/s2j-webinar-service) だけが持ちます。本ライブラリは Zoom のフィールドを持ちません。投票 (poll) と登録の質問は使いません。回答レポート (`GET /report/webinars/{webinarId}/survey`) は設問の作成・更新ではありません。
+マッピングは [S2J Webinar Service](https://github.com/stein2nd/s2j-webinar-service) だけが持ちます。本ライブラリは Zoom のフィールドを持ちません。投票 (poll) と登録の質問は使いません。回答レポート (`GET /report/webinars/{webinarId}/survey`) は設問の作成・更新ではありません。
 
-初版5種の `type` 文字列は、`webinarSurveyUpdate` の `custom_survey.questions[].type` で確定しています。キー名の詳細は webinar-service の写像表です。
+初版5種の `type` 文字列は、`webinarSurveyUpdate` の `custom_survey.questions[].type` で確定しています。キー名の詳細は webinar-service のマッピング表です。
 
 | 文書 | Zoom (`custom_survey.questions[]`) |
 | --- | --- |
@@ -263,7 +263,7 @@ enum 全体 (初版では後ろ3つを送らない) は、`single` / `multiple` 
 * ライブラリには上限の初期値も、設定の下限・上限も埋め込まない。検証と助言の規則だけを持つ。
 * 誘導と二重の問いは、初版では判定しない。あとで足すなら、保存を拒まない助言か、ボタンで頼む見直しに限る。周知はプラグインのパネル冒頭の指針である。
 * 内部名は回答者に出さない。Zoom の一覧用であり、本ライブラリは送信しない。
-* Zoom の型名と添付リクエストは本ライブラリに入れない。写像は S2J Webinar Service が持つ。
+* Zoom の型名と添付リクエストは本ライブラリに入れない。マッピングは S2J Webinar Service が持つ。
 * 回答率の数値は持たない。
 * ライセンスは、プラグインとライブラリの両方で GPL-3.0-or-later。
 * パッケージ名は `s2j/webinar-survey-service`。プラグインのスラッグは `s2j-webinar-survey`。
@@ -276,7 +276,7 @@ enum 全体 (初版では後ろ3つを送らない) は、`single` / `multiple` 
 | 2026-10-06 | 下書きは、依頼文の組み立てと返却文の分解までを本ライブラリが持つ。モデルはプラグインがボタンで1回呼ぶ。人が採用するまで文書に入らない、と記録 |
 | 2026-10-07 | 設問総数の上限はプラグインのサイト設定が渡す。未設定の初期値は6。ライブラリには埋め込まない、と記録 |
 | 2026-10-07 | 誘導と二重の問いは初版では判定しない。あとで足すなら保存を拒まない助言かボタンの見直しに限る。周知はプラグインの指針、と記録 |
-| 2026-10-07 | 答え方を `single` / `multiple` / `short` / `long` / `rating` の5つにする。写像は webinar-service。画像・スキップ・マッチング・ランク・空欄記入は初版以降の検討、と記録 |
+| 2026-10-07 | 答え方を `single` / `multiple` / `short` / `long` / `rating` の5つにする。マッピングは webinar-service。画像・スキップ・マッチング・ランク・空欄記入は初版以降の検討、と記録 |
 | 2026-10-07 | 初版5種の Zoom `type` を確定 (`single` / `multiple` / `short_answer` / `long_answer` / `rating_scale`)。本ライブラリは Zoom フィールドを持たない、と記録 |
 | 2026-10-07 | Similarity の docs 構成に倣い、実装向け仕様を `docs_mod/specs.md` 起点で分割した、と記録 |
 | 2026-10-07 | 初版到達点に下書きの組立・分解を含める。`ready` は S2J Webinar が読む。`max_questions` が1未満は例外、と記録 |
