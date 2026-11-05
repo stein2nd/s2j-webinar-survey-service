@@ -72,7 +72,7 @@ focus の検証 (`prompt` / `choices`):
 | `short` / `long` | 空配列、またはキーなし | 載せない。文字数欄は持たない | 載せない |
 | `rating` | 空配列、またはキーなし | 整数で `score_min` < `score_max`。欠けていれば目安として `0` と `10` を候補に載せる | 空文字可。モデルが返したら入れてよい |
 
-* `short` と `long` の文字数は、文書にも候補にも持たない。添付時に Zoom API のデフォルトに任せる (写像は webinar-service)。
+* `short` と `long` の文字数は、文書にも候補にも持たない。添付時に Zoom API のデフォルトに任せる (マッピングは webinar-service)。
 * `evaluate` は、`score_min` / `score_max` を埋め込まない。候補への目安埋めは、`parse_draft_response` だけである。
 * kind が `choices` の場合は、候補は `choices` (短いラベルの列) を主とし、他フィールドは省略してよい。プラグインが開いている設問にマージする。
 * 形を満たさない候補は、捨てる。すべて捨てた場合は、候補列は空である。
