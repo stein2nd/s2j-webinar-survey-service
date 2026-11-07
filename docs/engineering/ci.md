@@ -22,7 +22,7 @@
 ## 品質ゲート方針
 
 * 品質ゲートは CI で自動実行し、失敗時は merge 不可とする。
-* **1本の workflow** ([`.github/workflows/ci.yml`](../../.github/workflows/ci.yml)) が PR / `main` push / merge queue で常に起動する (workflow レベルの `path filter` は使わない)。
+* **1本の workflow** ([`.github/workflows/ci.yml`](../../.github/workflows/ci.yml)) が PR / `main` push / merge queue で常に起動する (workflow レベルの `path filter` は使わない)。各 job の runner は `ubuntu-24.04`。third-party Actions は Node.js v24ランタイム向けのメジャーを利用する (詳細は [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml))。docs lint の Node は **24**。
 * 変更検知 ([`dorny/paths-filter`](https://github.com/dorny/paths-filter)) の結果に応じ、**job レベル**で PHP 品質または docs lint を実行する。該当パスがない job は **Skipped** (Required には成功扱いで通る)。
 * **Ruleset で Required にするのは `merge-gate` のみ**。`merge-gate` は、実行された job が failure / cancelled でないことを確認する。
 
