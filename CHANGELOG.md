@@ -2,6 +2,14 @@
 
 ## unreleased
 
+## 0.2.3 - 2026-11-07
+
+### Changed
+
+* [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) — 各 job の runner を `ubuntu-24.04` に固定し、`actions/checkout`・`dorny/paths-filter`・`actions/setup-node` を Node.js v24ランタイム向けメジャーに更新 (hosted runner の非推奨アノテーション対策)
+* [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) — `docs-lint` の Node を **24** にし、`cache: npm` を指定
+* [docs/engineering/ci.md](./docs/engineering/ci.md) — 上記 runner / Actions 方針を追記
+
 ## 0.2.2 - 2026-11-05
 
 ### Changed
